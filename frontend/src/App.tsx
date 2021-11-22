@@ -1,8 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import axios from 'axios'
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  useEffect(()=>{
+    axios.post('/api/v1/token/', {
+      username: 'admin',
+      password: '1234567'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }, [])
   return (
     <div className="App">
       <header className="App-header">

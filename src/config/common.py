@@ -34,7 +34,6 @@ INSTALLED_APPS = (
     'django_rest_passwordreset',  # for reset password endpoints
     'drf_yasg',  # swagger api
     'easy_thumbnails',  # image lib
-    'social_django',  # social login
     'corsheaders',  # cors handling
     'django_inlinecss',  # inline css in templates
     'django_summernote',  # text editor
@@ -47,14 +46,8 @@ INSTALLED_APPS = (
     'health_check.contrib.migrations',
     'health_check.contrib.celery_ping',  # requires celery
     # Your apps
-    'src.notifications',
     'src.users',
-    'src.social',
     'src.files',
-    'src.common',
-    # Third party optional apps
-    # app must be placed somewhere after all the apps that are going to be generating activities
-    # 'actstream',                  # activity stream
 )
 
 # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
@@ -67,7 +60,6 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
 )
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', '#p7&kxb7y^yq8ahfw5%$xh=f8=&1y*5+a5($8w_f7kw!-qig(j')
@@ -112,7 +104,7 @@ DATABASES = {
 }
 
 # General
-APPEND_SLASH = True
+APPEND_SLASH = False
 TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'en-us'
 # If you set this to False, Django will make some optimizations so as not
@@ -151,8 +143,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -229,56 +219,15 @@ AUTH_USER_MODEL = 'users.User'
 
 # Social login
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
     'src.users.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-for key in ['GOOGLE_OAUTH2_KEY', 'GOOGLE_OAUTH2_SECRET', 'FACEBOOK_KEY', 'FACEBOOK_SECRET', 'TWITTER_KEY', 'TWITTER_SECRET']:
-    exec("SOCIAL_AUTH_{key} = os.environ.get('{key}', '')".format(key=key))
-
-# FB
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {'fields': 'id, name, email'}
-SOCIAL_AUTH_FACEBOOK_API_VERSION = '5.0'
-
-# Twitter
-SOCIAL_AUTH_TWITTER_SCOPE = ['email']
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
 SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
 # If this is not set, PSA constructs a plausible username from the first portion of the
 # user email, plus some random disambiguation characters if necessary.
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-SOCIAL_AUTH_PIPELINE = (
-    'social_core.pipeline.social_auth.social_details',
-    'social_core.pipeline.social_auth.social_uid',
-    'social_core.pipeline.social_auth.auth_allowed',
-    'social_core.pipeline.social_auth.social_user',
-    'social_core.pipeline.user.get_username',
-    'social_core.pipeline.social_auth.associate_by_email',
-    'social_core.pipeline.user.create_user',
-    'social_core.pipeline.social_auth.associate_user',
-    'social_core.pipeline.social_auth.load_extra_data',
-    'social_core.pipeline.user.user_details',
-)
-
-SOCIAL_AUTH_TWITTER_PIPELINE = (
-    'social_core.pipeline.social_auth.social_details',
-    'social_core.pipeline.social_auth.social_uid',
-    'social_core.pipeline.social_auth.auth_allowed',
-    # 'social_core.pipeline.social_auth.social_user',
-    'src.common.social_pipeline.user.social_user',
-    'social_core.pipeline.user.get_username',
-    'social_core.pipeline.social_auth.associate_by_email',
-    'social_core.pipeline.user.create_user',
-    'social_core.pipeline.social_auth.associate_user',
-    'social_core.pipeline.social_auth.load_extra_data',
-    'social_core.pipeline.user.user_details',
-    'src.common.social_pipeline.user.login_user',  # login correct user at the end
-)
-
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/complete/twitter/'
 
 THUMBNAIL_ALIASES = {
     'src.users': {
