@@ -6,6 +6,7 @@ from src.common.serializers import ThumbnailerJSONSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     profile_picture = ThumbnailerJSONSerializer(required=False, allow_null=True, alias_target='src.users')
+    is_admin = serializers.BooleanField(source='check_admin_permission', read_only=True)
 
     class Meta:
         model = User
@@ -15,6 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'profile_picture',
+            'is_admin',
         )
         read_only_fields = ('username',)
 
@@ -34,15 +36,6 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = (
-            'id',
-            'username',
-            'password',
-            'first_name',
-            'last_name',
-            'email',
-            'tokens',
-            'profile_picture',
-        )
+        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'tokens', 'profile_picture', 'is_admin')
         read_only_fields = ('tokens',)
         extra_kwargs = {'password': {'write_only': True}}

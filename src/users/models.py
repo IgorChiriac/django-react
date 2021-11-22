@@ -44,5 +44,13 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    def check_admin_permission(self):
+        return self.has_perm('users.is_admin')
+
+    class Meta:
+        permissions = [
+            ("is_admin", "Can manage users and restaurants."),
+        ]
+
 
 saved_file.connect(generate_aliases_global)
