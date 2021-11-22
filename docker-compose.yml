@@ -36,40 +36,5 @@ services:
     depends_on:
       - db
 
-  queue:
-    build:
-      context: .
-      args:
-        REQUIREMENTS_FILE: dev.txt
-    restart: unless-stopped
-    env_file: .env
-    command: sh /entrypoint-queue.sh
-    volumes:
-      - ./:/app
-
-  beat:
-    build:
-      context: .
-      args:
-        REQUIREMENTS_FILE: dev.txt
-    restart: unless-stopped
-    env_file: .env
-    command: sh /entrypoint-beat.sh
-    volumes:
-      - ./:/app
-
-  redis:
-    image: redis:alpine
-    restart: unless-stopped
-    ports:
-      - 6379:6379
-
-  mailhog:
-    image: mailhog/mailhog:latest
-    restart: always
-    ports:
-      - 1025:1025
-      - 8025:8025
-
 volumes:
   db-data:

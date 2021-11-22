@@ -23,6 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class CreateUserSerializer(serializers.ModelSerializer):
     profile_picture = ThumbnailerJSONSerializer(required=False, allow_null=True, alias_target='src.users')
+    is_admin = serializers.BooleanField(source='check_admin_permission', read_only=True)
     tokens = serializers.SerializerMethodField()
 
     def get_tokens(self, user):

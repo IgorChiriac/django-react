@@ -31,20 +31,13 @@ INSTALLED_APPS = (
     'rest_framework',  # utilities for rest apis
     'rest_framework.authtoken',  # token authentication
     'django_filters',  # for filtering rest endpoints
-    'django_rest_passwordreset',  # for reset password endpoints
     'drf_yasg',  # swagger api
     'easy_thumbnails',  # image lib
     'corsheaders',  # cors handling
-    'django_inlinecss',  # inline css in templates
-    'django_summernote',  # text editor
-    'django_celery_beat',  # task scheduler
-    'djmoney',  # money object
     'health_check',
     'health_check.db',  # stock Django health checkers
-    'health_check.cache',
     'health_check.storage',
     'health_check.contrib.migrations',
-    'health_check.contrib.celery_ping',  # requires celery
     # Your apps
     'src.users',
     'src.files',
@@ -73,10 +66,6 @@ EMAIL_HOST = os.getenv('EMAIL_HOST', 'localhost')
 EMAIL_PORT = os.getenv('EMAIL_PORT', 1025)
 EMAIL_FROM = os.getenv('EMAIL_FROM', 'noreply@somehost.local')
 
-# Celery
-BROKER_URL = os.getenv('BROKER_URL', 'redis://redis:6379')
-CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://redis:6379')
-
 ADMINS = ()
 
 # Sentry
@@ -84,12 +73,6 @@ sentry_sdk.init(dsn=os.getenv('SENTRY_DSN', ''), integrations=[DjangoIntegration
 
 # CORS
 CORS_ORIGIN_ALLOW_ALL = True
-
-# CELERY
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
 
 # Postgres
 DATABASES = {
@@ -223,8 +206,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
-SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
 # If this is not set, PSA constructs a plausible username from the first portion of the
 # user email, plus some random disambiguation characters if necessary.
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
@@ -287,22 +268,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-}
-
-# summernote configuration
-SUMMERNOTE_CONFIG = {
-    'summernote': {
-        'toolbar': [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['fontname', ['fontname']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph', 'smallTagButton']],
-            ['table', ['table']],
-            ['insert', ['link', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']],
-        ]
-    }
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

@@ -28,12 +28,9 @@ router.registry.extend(files_router.registry)
 urlpatterns = [
     # admin panel
     path('admin/', admin.site.urls),
-    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
-    # summernote editor
-    path('summernote/', include('django_summernote.urls')),
+    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URL
     # api
     path('api/v1/', include(router.urls)),
-    url(r'^api/v1/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     # auth
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
