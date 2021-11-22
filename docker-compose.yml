@@ -21,7 +21,7 @@ services:
     ports:
       - "3001:3000"
 
-  web:
+  backend:
     build:
       context: .
       args:
@@ -35,6 +35,17 @@ services:
       - ./:/app
     depends_on:
       - db
+  
+  nginx:
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
 
 volumes:
   db-data:
