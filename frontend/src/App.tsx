@@ -1,36 +1,18 @@
-import React, {useEffect} from 'react';
-import axios from 'axios'
-import logo from './logo.svg';
+import React, {useContext, useEffect} from 'react';
 import './App.css';
+import { AuthContext } from './context/AuthContext';
+
 
 function App() {
+  const { logInUser, isLoading, user } = useContext(AuthContext);
   useEffect(()=>{
-    axios.post('/api/v1/token/', {
-      username: 'admin',
-      password: '1234567'
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    logInUser()
   }, [])
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and have fun.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {isLoading && 'Loading'}
+        {user && 'Current user is: ' + user?.username}
       </header>
     </div>
   );
