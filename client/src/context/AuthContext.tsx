@@ -10,15 +10,16 @@ function AuthProviderWrapper(props: any) {
     const [user, setUser] = useState(null);
 
     const logInUser = async ({ username, password }: { username: string; password: string }) => {
+        setIsLoading(true)
         try {
             const token = await AuthenticationService.login(username, password)
             sessionStorage.setItem('authToken', token.data.access)
             let response = await UserService.getCurrentUser()
-            setUser(response.data);
-            setIsLoading(false);
+            setUser(response.data);      
         } catch (error) {
             console.log(error);
         }
+        setIsLoading(false);
     };
 
     const logOutUser = () => {
