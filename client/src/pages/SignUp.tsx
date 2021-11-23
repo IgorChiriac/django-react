@@ -1,7 +1,15 @@
 import { useState } from 'react';
+import UserService from '../services/user'
 
 const SignUp = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
+    const submitForm = ()=>{
+      UserService.createUser(formData).then((res)=>{
+        console.log(res)
+      }).catch((e)=>{
+        console.log(e)
+      })
+    }
     return (
         <div>
             <h1>Create User</h1>
@@ -30,7 +38,7 @@ const SignUp = () => {
             <label>Email</label>
             <input type="email" name="email"/>
             <br />
-            <button type="button" onClick={() => console.log(formData)}>
+            <button type="button" onClick={() => submitForm()}>
                 Log in
             </button>
         </div>

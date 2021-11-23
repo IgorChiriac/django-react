@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import AuthenticationService from '../services/authentification';
+import UserService from '../services/user';
 
 const AuthContext = React.createContext({} as any);
 
@@ -10,11 +11,8 @@ function AuthProviderWrapper(props: any) {
 
     const logInUser = async ({ username, password }: { username: string; password: string }) => {
         try {
-            await axios.post('/api/v1/token/', {
-                username: username,
-                password: password,
-            });
-            let response = await axios.get('/api/v1/users/me/');
+            await AuthenticationService.login(username, password)
+            let response = await UserService.getCurrentUser()
             setUser(response.data);
             setIsLoading(false);
         } catch (error) {
