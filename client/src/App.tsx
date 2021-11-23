@@ -1,43 +1,42 @@
-import { useContext, useState } from 'react';
 import './App.css';
-import { AuthContext } from './context/AuthContext';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import NotFound from './pages/NotFound';
+import Home from './pages/Home';
 
 function App() {
-    const { logInUser, isLoading, user, logOutUser } = useContext(AuthContext);
-    const [formData, setFormData] = useState({ username: '', password: '' });
     return (
-        <div className="App">
-            <header className="App-header">
-                {isLoading && 'Loading'}
-                {user ? (
+        <Router>
+            <div className="App">
+                <header className="App-header">
                     <div>
-                        <span>Current user is: {user?.username}</span>
-                        <br />
-                        <button onClick={() => logOutUser()}>Log out </button>
+                        <ul>
+                            <li>
+                                <Link to={'/'}>Home</Link>
+                            </li>
+                            <li>
+                                <Link to={'/login'}>Login</Link>
+                            </li>
+                            <li>
+                                <Link to={'/signup'}>Signup</Link>
+                            </li>
+                        </ul>
                     </div>
-                ) : (
-                    <div>
-                        <input
-                            type="text"
-                            name="username"
-                            value={formData.username}
-                            onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                        />{' '}
-                        <br />
-                        <input
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                        />
-                        <br />
-                        <button type="button" onClick={() => logInUser(formData)}>
-                            Log in
-                        </button>
-                    </div>
-                )}
-            </header>
-        </div>
+                </header>
+                <Switch>
+                    <Route exact path="/" component={Home} />
+
+                    <Route path="/login">
+                        <Login />
+                    </Route>
+                    <Route path="/signup">
+                        <SignUp />
+                    </Route>
+                    <Route component={NotFound} />
+                </Switch>
+            </div>
+        </Router>
     );
 }
 
