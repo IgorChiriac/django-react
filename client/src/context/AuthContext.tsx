@@ -15,7 +15,8 @@ function AuthProviderWrapper(props: any) {
             const token = await AuthenticationService.login(username, password)
             sessionStorage.setItem('authToken', token.data.access)
             let response = await UserService.getCurrentUser()
-            setUser(response.data);      
+            setUser(response.data);
+            setIsLoggedIn(true);
         } catch (error) {
             console.log(error);
         }

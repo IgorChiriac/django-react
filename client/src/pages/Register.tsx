@@ -62,7 +62,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -79,6 +79,15 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <TextField
+              margin="normal"
+              fullWidth
               id="first_name"
               label="First Name"
               name="first_name"
@@ -86,24 +95,13 @@ export default function SignIn() {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               id="last_name"
               label="Last Name"
               name="last_name"
               autoComplete="last_name"
             />
-            <TextField margin="normal" required fullWidth id="email" label="Email" name="Email" autoComplete="email" />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
+            <TextField margin="normal" fullWidth id="email" label="Email" name="Email" autoComplete="email" />
 
             <Button type="submit" disabled={isLoading} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up!

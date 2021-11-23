@@ -5,12 +5,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthContext } from "../context/AuthContext";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 function Copyright(props: any) {
   return (
@@ -26,6 +27,14 @@ function Copyright(props: any) {
 }
 
 const theme = createTheme();
+
+function LoadingIndicator() {
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>
+  );
+}
 
 export default function SignIn() {
   const { logInUser, isLoading, user, logOutUser } = React.useContext(AuthContext);
@@ -43,6 +52,7 @@ export default function SignIn() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        {isLoading && <LoadingIndicator />}
         <Box
           sx={{
             marginTop: 8,

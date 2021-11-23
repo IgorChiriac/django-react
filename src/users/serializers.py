@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.decorators import authentication_classes
 
 from src.users.models import User
 from src.common.serializers import ThumbnailerJSONSerializer
@@ -39,4 +40,4 @@ class CreateUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email', 'tokens', 'profile_picture', 'is_admin')
         read_only_fields = ('tokens',)
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {'password': {'write_only': True, 'required': True}}
