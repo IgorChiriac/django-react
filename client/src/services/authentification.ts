@@ -1,12 +1,6 @@
 import axios from 'axios';
-
-interface ICallback<T = any> {
-  (data: T): void;
-}
-
 export interface IAuthenticationService {
   login: (username: string, password: string) => Promise<any>;
-  logout: (callback: ICallback<string>) => void;
 }
 
 
@@ -16,10 +10,6 @@ const AuthenticationService: IAuthenticationService = {
       username: username,
       password: password,
     });
-  },
-
-  logout() {
-      sessionStorage.removeItem("auth_token");
   },
 }
 

@@ -11,7 +11,8 @@ function AuthProviderWrapper(props: any) {
 
     const logInUser = async ({ username, password }: { username: string; password: string }) => {
         try {
-            await AuthenticationService.login(username, password)
+            const token = await AuthenticationService.login(username, password)
+            sessionStorage.setItem('authToken', token.data.access)
             let response = await UserService.getCurrentUser()
             setUser(response.data);
             setIsLoading(false);

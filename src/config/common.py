@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     # Your apps
     'src.users',
     'src.files',
+    'src.restaurants'
 )
 
 # https://docs.djangoproject.com/en/2.0/topics/http/middleware/
