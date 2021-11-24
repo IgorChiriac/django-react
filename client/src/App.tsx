@@ -27,10 +27,7 @@ function App() {
           >
             <LoginPage />
           </PublicRoute>
-          <PublicRoute
-            path="/signup"
-            isAuthenticated={isLoggedIn}
-          >
+          <PublicRoute path="/signup" isAuthenticated={isLoggedIn}>
             <SignUp />
           </PublicRoute>
           <PrivateRoute
