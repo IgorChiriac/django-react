@@ -47,5 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://nginx/"
+  "proxy": "http://localhost:8001"
 }

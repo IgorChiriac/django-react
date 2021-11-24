@@ -11,16 +11,6 @@ services:
     volumes:
       - db-data:/data/postgres
 
-  client:
-    build:
-      dockerfile: Dockerfile
-      context: ./client
-    volumes:
-      - /app/node_modules
-      - ./client:/app
-    ports:
-      - "3001:3000"
-
   api:
     build:
       context: .
@@ -35,17 +25,6 @@ services:
       - ./:/app
     depends_on:
       - db
-  
-  nginx:
-    depends_on:
-      - api
-      - client
-    restart: always
-    build:
-      dockerfile: Dockerfile
-      context: ./nginx
-    ports:
-      - "3050:80"
 
 volumes:
   db-data:
