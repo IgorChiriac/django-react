@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from rest_framework.decorators import authentication_classes
 
 from src.users.models import User
 from src.common.serializers import ThumbnailerJSONSerializer

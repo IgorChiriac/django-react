@@ -1,24 +1,22 @@
 from rest_framework import viewsets, mixins
-from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework import status
 from rest_framework.response import Response
 
 from src.users.models import User
-from src.users.permissions import IsUserOrReadOnly
+from src.users.permissions import ListAdminOnly, AnonCreateAndUpdateOwnerOnly
 from src.users.serializers import CreateUserSerializer, UserSerializer
 
 
-class UserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class UserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet, mixins.DestroyModelMixin):
     """
     Creates, Updates and Retrieves - User Accounts
     """
 
     queryset = User.objects.all()
     serializers = {'default': UserSerializer, 'create': CreateUserSerializer}
-    permissions = {'default': (IsUserOrReadOnly,), 'create': (AllowAny,)}
+    permissions = {'default': (ListAdminOnly, AnonCreateAndUpdateOwnerOnly,)}
 
     def get_serializer_class(self):
         return self.serializers.get(self.action, self.serializers['default'])
