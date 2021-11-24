@@ -29,7 +29,7 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const { logInUser, isLoading, user, logOutUser } = React.useContext(AuthContext);
+  const { isLoading, setLoggedUser } = React.useContext(AuthContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,6 +40,7 @@ export default function SignIn() {
     })
       .then((res) => {
         console.log(res);
+        setLoggedUser(res.data.tokens.access)
       })
       .catch((e) => {
         console.log(e);

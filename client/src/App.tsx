@@ -1,39 +1,39 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./pages/Login";
 import SignUp from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
+import PublicRoute from './routes/PublicRoute';
+import PrivateRoute from './routes/PrivateRoute';
+import {useContext} from 'react'
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <div>
-            <ul>
-              <li>
-                <Link to={"/"}>Home</Link>
-              </li>
-              <li>
-                <Link to={"/login"}>Login</Link>
-              </li>
-              <li>
-                <Link to={"/signup"}>Signup</Link>
-              </li>
-            </ul>
-          </div>
-        </header>
         <Switch>
-          <Route exact path="/" component={Home} />
+          <PrivateRoute exact path="/" isAuthenticated={isLoggedIn}>
+            <Home />
+          </PrivateRoute>
 
-          <Route path="/login">
+          <PublicRoute
+            path="/login"
+            isAuthenticated={isLoggedIn}
+          >
             <Login />
-          </Route>
-          <Route path="/signup">
+          </PublicRoute>
+          <PublicRoute
+            path="/signup"
+            isAuthenticated={isLoggedIn}
+          >
             <SignUp />
+          </PublicRoute>
+          <Route path="*">
+            <NotFound />
           </Route>
-          <Route component={NotFound} />
         </Switch>
       </div>
     </Router>

@@ -29,8 +29,13 @@ function AuthProviderWrapper(props: any) {
         setUser(null);
     };
 
+    const setLoggedUser = (token: string) => {
+        sessionStorage.setItem('authToken', token)
+        setIsLoggedIn(true);
+    }
+
     return (
-        <AuthContext.Provider value={{ isLoggedIn, isLoading, user, logInUser, logOutUser }}>
+        <AuthContext.Provider value={{ isLoggedIn, isLoading, user, logInUser, logOutUser, setLoggedUser }}>
             {props.children}
         </AuthContext.Provider>
     );

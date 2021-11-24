@@ -5,7 +5,6 @@ import { AuthContext } from "../context/AuthContext";
 
 const Home = ()=>{
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
-  console.log(isLoggedIn)
   useEffect(()=>{
     RestaurantsService.getRestaurants().then(res=>{
       console.log(res)
