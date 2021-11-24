@@ -10,7 +10,7 @@ import {useContext} from 'react'
 import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, currentUser } = useContext(AuthContext);
   return (
     <Router>
       <div className="App">
@@ -28,6 +28,12 @@ function App() {
           <PublicRoute
             path="/signup"
             isAuthenticated={isLoggedIn}
+          >
+            <SignUp />
+          </PublicRoute>
+          <PublicRoute
+            path="/users"
+            isAuthenticated={isLoggedIn && currentUser?.is_admin}
           >
             <SignUp />
           </PublicRoute>

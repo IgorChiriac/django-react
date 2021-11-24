@@ -39,8 +39,8 @@ export default function SignIn() {
       password: String(data.get("password")),
     })
       .then((res) => {
-        console.log(res);
-        setLoggedUser(res.data.tokens.access)
+        const {tokens, ...user} = res.data;
+        setLoggedUser(user, tokens.access)
       })
       .catch((e) => {
         console.log(e);

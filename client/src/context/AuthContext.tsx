@@ -1,41 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthenticationService from '../services/authentification';
-import UserService from '../services/user';
+import UserService, { IUser } from '../services/user';
 
 const AuthContext = React.createContext({} as any);
+interface IUserState {
+    loading: boolean;
+    isLoggedIn: boolean;
+    user: null | IUser;
+}
 
 function AuthProviderWrapper(props: any) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [user, setUser] = useState(null);
+    const [appState, setAppState] = useState<IUserState>({
+        loading: false,
+        isLoggedIn: false,
+        user: null,
+    });
+
+    useEffect(() => {
+        const authToken = sessionStorage.getItem('authToken');
+        if (authToken) {
+            UserService.getCurrentUser().then((response) => {
+                setAppState({ loading: false, isLoggedIn: true, user: response.data });
+            });
+        }
+    }, []);
 
     const logInUser = async ({ username, password }: { username: string; password: string }) => {
-        setIsLoading(true)
+        setAppState({ ...appState, loading: true });
         try {
-            const token = await AuthenticationService.login(username, password)
-            sessionStorage.setItem('authToken', token.data.access)
-            let response = await UserService.getCurrentUser()
-            setUser(response.data);
-            setIsLoggedIn(true);
+            const token = await AuthenticationService.login(username, password);
+            sessionStorage.setItem('authToken', token.data.access);
+            let response = await UserService.getCurrentUser();
+            setAppState({ loading: false, isLoggedIn: true, user: response.data });
         } catch (error) {
-            console.log(error);
+            setAppState({ ...appState, loading: false});
         }
-        setIsLoading(false);
     };
 
     const logOutUser = () => {
         sessionStorage.removeItem('authToken');
-        setIsLoggedIn(false);
-        setUser(null);
+        setAppState({ ...appState, loading: false, isLoggedIn: false, user: null });
     };
 
-    const setLoggedUser = (token: string) => {
-        sessionStorage.setItem('authToken', token)
-        setIsLoggedIn(true);
-    }
+    const setLoggedUser = (user: IUser, token: string) => {
+        sessionStorage.setItem('authToken', token);
+        setAppState({ ...appState, isLoggedIn: true, user });
+    };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, isLoading, user, logInUser, logOutUser, setLoggedUser }}>
+        <AuthContext.Provider
+            value={{
+                isLoggedIn: appState.isLoggedIn,
+                isLoading: appState.loading,
+                currentUser: appState.user,
+                logInUser,
+                logOutUser,
+                setLoggedUser,
+            }}
+        >
             {props.children}
         </AuthContext.Provider>
     );
