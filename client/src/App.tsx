@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import SignUp from "./pages/Register";
 import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import UserPage from "./pages/UserPage";
-import PublicRoute from './routes/PublicRoute';
-import PrivateRoute from './routes/PrivateRoute';
-import {useContext} from 'react'
+import PublicRoute from "./routes/PublicRoute";
+import PrivateRoute from "./routes/PrivateRoute";
+import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import RestaurantDetail from "./pages/RestaurantDetail/RestaurantDetail";
 
 function App() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -20,23 +21,17 @@ function App() {
           <Route exact path="/">
             <Home />
           </Route>
+          <Route path="/restaurant/:id">
+            <RestaurantDetail />
+          </Route>
 
-          <PublicRoute
-            path="/login"
-            isAuthenticated={isLoggedIn}
-          >
+          <PublicRoute path="/login" isAuthenticated={isLoggedIn}>
             <LoginPage />
           </PublicRoute>
-          <PublicRoute
-            path="/signup"
-            isAuthenticated={isLoggedIn}
-          >
+          <PublicRoute path="/signup" isAuthenticated={isLoggedIn}>
             <SignUp />
           </PublicRoute>
-          <PrivateRoute
-            path="/users"
-            isAuthenticated={isLoggedIn}
-          >
+          <PrivateRoute path="/users" isAuthenticated={isLoggedIn}>
             <UserPage />
           </PrivateRoute>
           <Route path="*">
