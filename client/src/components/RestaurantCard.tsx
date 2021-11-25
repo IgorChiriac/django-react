@@ -20,9 +20,7 @@ const RestaurantCard = (props: Props) => {
       <CardMedia
         component="img"
         height={props.isDetailView ? "320" : "130"}
-        image={
-          "https://phantom-marca.unidadeditorial.es/a7a94dd4627f134e5b87586e83a6cd44/resize/1320/f/webp/assets/multimedia/imagenes/2021/11/06/16362306284114.jpg"
-        }
+        image={props.restaurant.restaurant_photo}
         alt="restaurant_main"
       />
       <CardContent sx={{ backgroundColor: "#dfdcf1" }}>

@@ -5,7 +5,10 @@ interface Props {}
 
 const NewReview = (props: Props) => {
   return (
-    <Box display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column" sx={{ border: "1px solid black", padding: "3rem", backgroundColor: "#fdfdfd" }}>
+      <Typography gutterBottom variant="h6" component="div">
+        Leave your review
+      </Typography>
       <Rating name="review" value={3} />
       <TextField multiline rows={4} size="small" margin="normal" id="comment" label="Comment" name="comment" />
       <Button

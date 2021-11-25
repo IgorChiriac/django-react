@@ -34,9 +34,6 @@ const RestaurantDetail = () => {
             <Typography gutterBottom variant="h5" component="div" marginTop={3}>
               Reviews
             </Typography>
-            <Typography gutterBottom variant="h6" component="div" marginTop={3}>
-              Leave your review
-            </Typography>
             <NewReview />
             <Typography gutterBottom variant="h6" component="div" marginTop={3}>
               People's reviews
