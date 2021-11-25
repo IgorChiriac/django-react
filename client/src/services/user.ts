@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export interface IUser {
   username: string;
@@ -6,9 +6,9 @@ export interface IUser {
   last_name: string;
   is_admin: boolean;
 }
-export interface IUserService{
-  getCurrentUser: () => Promise<{data: IUser}>;
-  getUserList: (page: number) => Promise<{data: IUser[]}>;
+export interface IUserService {
+  getCurrentUser: () => Promise<{ data: IUser }>;
+  getUserList: (page: number) => Promise<{ data: IUser[] }>;
   createUser: (data: ICreateUser) => Promise<any>;
 }
 
@@ -17,22 +17,22 @@ interface ICreateUser {
   password: string;
 }
 
-
 const UserService: IUserService = {
-  getCurrentUser(): Promise<any>{
-    return axios.get('/api/v1/users/me/')
+  getCurrentUser(): Promise<any> {
+    return axios.get("/api/v1/users/me/");
   },
 
-  createUser(data: ICreateUser): Promise<any>{
-    return axios.post('/api/v1/users/', data)
+  createUser(data: ICreateUser): Promise<any> {
+    return axios.post("/api/v1/users/", data);
   },
 
-  getUserList(page: number): Promise<any>{
+  getUserList(page: number): Promise<any> {
     return axios.get(`/api/v1/users/?page=${page + 1}`, {
       headers: {
-        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` 
-      }})
+        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+      },
+    });
   },
-}
+};
 
 export default UserService;

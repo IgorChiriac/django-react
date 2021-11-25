@@ -1,7 +1,5 @@
-const NotFound = ()=>{
-  return (
-    <div>Not found page</div>
-  )
-}
+const NotFound = () => {
+  return <div>Not found page</div>;
+};
 
-export default NotFound
+export default NotFound;

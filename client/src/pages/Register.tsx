@@ -15,7 +15,12 @@ import UserService from "../services/user";
 
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {"Igor Chiriac "}
       <Link color="inherit" href="https://www.linkedin.com/in/igor-chiriac/">
         LinkedIn
@@ -39,8 +44,8 @@ export default function SignIn() {
       password: String(data.get("password")),
     })
       .then((res) => {
-        const {tokens, ...user} = res.data;
-        setLoggedUser(user, tokens.access)
+        const { tokens, ...user } = res.data;
+        setLoggedUser(user, tokens.access);
       })
       .catch((e) => {
         console.log(e);
@@ -65,7 +70,12 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -102,9 +112,22 @@ export default function SignIn() {
               name="last_name"
               autoComplete="last_name"
             />
-            <TextField margin="normal" fullWidth id="email" label="Email" name="Email" autoComplete="email" />
+            <TextField
+              margin="normal"
+              fullWidth
+              id="email"
+              label="Email"
+              name="Email"
+              autoComplete="email"
+            />
 
-            <Button type="submit" disabled={isLoading} fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
               Sign Up!
             </Button>
             <Grid container>

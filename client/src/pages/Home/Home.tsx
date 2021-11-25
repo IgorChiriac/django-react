@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import RestaurantCard from "./components/RestaurantCard";
-import ApplicationBar from '../../components/ApplicationBar'
+import ApplicationBar from "../../components/ApplicationBar";
 
 const Home = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -20,9 +20,19 @@ const Home = () => {
     <>
       <ThemeProvider theme={theme}>
         <ApplicationBar />
-        <Container component="main" maxWidth="md" sx={{ backgroundColor: "white", padding: "20px" }}>
+        <Container
+          component="main"
+          maxWidth="md"
+          sx={{ backgroundColor: "white", padding: "20px" }}
+        >
           <CssBaseline />
-          <Grid container spacing={2} xs={12} alignItems="center" justifyContent="center">
+          <Grid
+            container
+            spacing={2}
+            xs={12}
+            alignItems="center"
+            justifyContent="center"
+          >
             {restaurants &&
               restaurants.length &&
               restaurants.map((restaurant) => (

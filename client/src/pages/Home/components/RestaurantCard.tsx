@@ -1,4 +1,13 @@
-import { Card, CardMedia, CardContent, Typography, CardActions, Button, Rating, Box } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  Rating,
+  Box,
+} from "@mui/material";
 import { useHistory } from "react-router";
 
 interface Props {
