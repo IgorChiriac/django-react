@@ -34,7 +34,7 @@ const RestaurantDetail = () => {
             <Typography gutterBottom variant="h5" component="div" marginTop={3}>
               Reviews
             </Typography>
-            <NewReview />
+            <NewReview restaurantId={params.id} />
             <Typography gutterBottom variant="h6" component="div" marginTop={3}>
               People's reviews
             </Typography>
