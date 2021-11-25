@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const pages = ["Restaurants", "Users"];
-const settings = ["Logout"];
 
 const ApplicationBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -88,18 +87,16 @@ const ApplicationBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem key={"restaurants"} onClick={handleCloseNavMenu}>
+              <MenuItem key={"restaurants"} onClick={handleCloseNavMenu} component={Link} to={"/"}>
                 <Typography textAlign="center">
-                  <Link to={"/"}>Restaurants</Link>
+                  Restaurants
                 </Typography>
               </MenuItem>
-              {!isLoggedIn && (
-                <MenuItem key={"login"}>
-                  <Typography textAlign="center">
-                    <Link to={"/login"}>Login</Link>
-                  </Typography>
-                </MenuItem>
-              )}
+              <MenuItem key={"users"} onClick={handleCloseNavMenu} component={Link} to={"/users"}>
+                <Typography textAlign="center">
+                  Users
+                </Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -155,19 +152,24 @@ const ApplicationBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={() => onLogoutClick()}>
+                  <MenuItem key={'logout'} onClick={() => onLogoutClick()}>
                     <Typography textAlign="center">Log out</Typography>
                   </MenuItem>
-                ))}
               </Menu>
             </Box>
           ) : (
-            <MenuItem key={"login"}>
+            <>
+            <MenuItem key={"login"} component={Link} to={"/login"}>
               <Typography textAlign="center">
-                <Link to={"/login"}>Login</Link>
+                Login
               </Typography>
             </MenuItem>
+                        <MenuItem key={"login"} component={Link} to={"/signup"}>
+                        <Typography textAlign="center">
+                          Sign Up
+                        </Typography>
+                      </MenuItem>
+                      </>
           )}
         </Toolbar>
       </Container>
