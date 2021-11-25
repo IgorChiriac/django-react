@@ -24,7 +24,6 @@ function App() {
           <Route path="/restaurant/:id">
             <RestaurantDetail />
           </Route>
-
           <PublicRoute path="/login" isAuthenticated={isLoggedIn}>
             <LoginPage />
           </PublicRoute>

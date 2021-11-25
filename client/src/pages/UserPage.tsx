@@ -17,6 +17,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import UserService, { IUser } from "../services/user";
+import ApplicationBar from "../components/ApplicationBar";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -118,6 +119,8 @@ export default function UserPage() {
   };
 
   return (
+    <>
+    <ApplicationBar />
     <Container maxWidth="sm">
       {users && (
         <TableContainer component={Paper}>
@@ -168,5 +171,6 @@ export default function UserPage() {
         </TableContainer>
       )}
     </Container>
+    </>
   );
 }

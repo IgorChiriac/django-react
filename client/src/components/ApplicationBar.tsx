@@ -5,35 +5,22 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-
-const pages = ["Restaurants", "Users"];
+import Link from '@mui/material/Link';
 
 const ApplicationBar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
   const { currentUser, logOutUser } = useContext(AuthContext);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -55,75 +42,21 @@ const ApplicationBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            Rate The Taste
+            <Link to="/" underline="none" color="white" component={RouterLink}>
+              Rate The Taste
+            </Link>
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              <MenuItem
-                key={"restaurants"}
-                onClick={handleCloseNavMenu}
-                component={Link}
-                to={"/"}
-              >
-                <Typography textAlign="center">Restaurants</Typography>
-              </MenuItem>
-              <MenuItem
-                key={"users"}
-                onClick={handleCloseNavMenu}
-                component={Link}
-                to={"/users"}
-              >
-                <Typography textAlign="center">Users</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
-            Rate The Taste
+            <Link to="/" underline="none" color="white" component={RouterLink}>
+              Rate The Taste
+            </Link>
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
 
           {currentUser ? (
             <Box sx={{ flexGrow: 0 }}>
@@ -158,6 +91,11 @@ const ApplicationBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                {currentUser.is_admin && (
+                <MenuItem key={"users"} component={RouterLink} to={"/users"}>
+                  <Typography textAlign="center">Users</Typography>
+                </MenuItem>
+                )}
                 <MenuItem key={"logout"} onClick={() => onLogoutClick()}>
                   <Typography textAlign="center">Log out</Typography>
                 </MenuItem>
@@ -165,10 +103,10 @@ const ApplicationBar = () => {
             </Box>
           ) : (
             <>
-              <MenuItem key={"login"} component={Link} to={"/login"}>
+              <MenuItem key={"login"} component={RouterLink} to={"/login"}>
                 <Typography textAlign="center">Login</Typography>
               </MenuItem>
-              <MenuItem key={"login"} component={Link} to={"/signup"}>
+              <MenuItem key={"login"} component={RouterLink} to={"/signup"}>
                 <Typography textAlign="center">Sign Up</Typography>
               </MenuItem>
             </>
