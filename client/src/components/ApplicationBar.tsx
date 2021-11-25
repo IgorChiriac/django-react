@@ -11,12 +11,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import Link from '@mui/material/Link';
+import Link from "@mui/material/Link";
 
 const ApplicationBar = () => {
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const { currentUser, logOutUser } = useContext(AuthContext);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -33,25 +31,15 @@ const ApplicationBar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "#3e3750" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
+          <Typography variant="h6" noWrap component="div" sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
             <Link to="/" underline="none" color="white" component={RouterLink}>
               Rate The Taste
             </Link>
           </Typography>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <Link to="/" underline="none" color="white" component={RouterLink}>
               Rate The Taste
             </Link>
@@ -63,15 +51,9 @@ const ApplicationBar = () => {
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   {currentUser.profile_picture ? (
-                    <Avatar
-                      alt={currentUser.username}
-                      src={currentUser.profile_picture.thumbnail}
-                    />
+                    <Avatar alt={currentUser.username} src={currentUser.profile_picture.thumbnail} />
                   ) : (
-                    <Avatar
-                      alt={currentUser.username}
-                      src={currentUser.username}
-                    />
+                    <Avatar alt={currentUser.username} src={currentUser.username} />
                   )}
                 </IconButton>
               </Tooltip>
@@ -92,9 +74,9 @@ const ApplicationBar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {currentUser.is_admin && (
-                <MenuItem key={"users"} component={RouterLink} to={"/users"}>
-                  <Typography textAlign="center">Users</Typography>
-                </MenuItem>
+                  <MenuItem key={"users"} component={RouterLink} to={"/users"}>
+                    <Typography textAlign="center">Users</Typography>
+                  </MenuItem>
                 )}
                 <MenuItem key={"logout"} onClick={() => onLogoutClick()}>
                   <Typography textAlign="center">Log out</Typography>

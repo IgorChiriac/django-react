@@ -7,7 +7,7 @@ interface Props {
 const ReviewCard = (props: Props) => {
   return (
     <Card>
-      <CardContent>
+      <CardContent sx={{ backgroundColor: "#dfdcf1" }}>
         <Rating name="Reviews" value={3} readOnly />
         <Typography gutterBottom variant="body1" component="div">
           {props.review.author}

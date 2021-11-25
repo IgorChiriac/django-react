@@ -25,7 +25,7 @@ const RestaurantCard = (props: Props) => {
         }
         alt="restaurant_main"
       />
-      <CardContent>
+      <CardContent sx={{ backgroundColor: "#dfdcf1" }}>
         <Typography gutterBottom variant="h5" component="div">
           {props.restaurant.name}
         </Typography>
