@@ -11,14 +11,14 @@ import {useContext} from 'react'
 import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  const { isLoggedIn, currentUser } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <Router>
       <div className="App">
         <Switch>
-          <PrivateRoute exact path="/" isAuthenticated={isLoggedIn}>
+          <Route exact path="/">
             <Home />
-          </PrivateRoute>
+          </Route>
 
           <PublicRoute
             path="/login"

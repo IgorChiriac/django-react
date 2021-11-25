@@ -16,7 +16,7 @@ const Home = ()=>{
   return (
     <>
       {isLoggedIn && <button onClick={()=>logOutUser()}>Logout User</button>}
-      <div>Hi {currentUser.username}</div>
+      <div>Hi {currentUser?.username}</div>
       <div>Home page</div>
       {imgs.length > 0 && imgs.map((i: {restaurant_photo: string})=>{
         return <img src={i?.restaurant_photo}/>

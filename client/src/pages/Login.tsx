@@ -37,7 +37,7 @@ function LoadingIndicator() {
 }
 
 export default function SignIn() {
-  const { logInUser, isLoading, user, logOutUser } = React.useContext(AuthContext);
+  const { logInUser, isLoading } = React.useContext(AuthContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
