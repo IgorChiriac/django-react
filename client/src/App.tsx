@@ -12,6 +12,7 @@ import { AuthContext } from "./context/AuthContext";
 
 function App() {
   const { isLoggedIn } = useContext(AuthContext);
+
   return (
     <Router>
       <div className="App">

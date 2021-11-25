@@ -20,10 +20,7 @@ interface ICreateUser {
 
 const UserService: IUserService = {
   getCurrentUser(): Promise<any>{
-    return axios.get('/api/v1/users/me/', {
-      headers: {
-        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` 
-      }})
+    return axios.get('/api/v1/users/me/')
   },
 
   createUser(data: ICreateUser): Promise<any>{

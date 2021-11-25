@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserService, { IUser } from '../services/user';
+import AuthenticationService from '../services/authentification';
 
 const AuthContext = React.createContext({} as any);
 interface IUserState {
@@ -14,9 +15,7 @@ function AuthProviderWrapper(props: any) {
     });
 
     useEffect(() => {
-        const authToken = sessionStorage.getItem('authToken');
-        console.log(authToken)
-        if (authToken && !appState.user) {
+        if (AuthenticationService.isUserLoggedIn() && !appState.user) {
             setAppState({ isLoggedIn: true, user: null });
             UserService.getCurrentUser()
                 .then((response) => {
@@ -29,17 +28,17 @@ function AuthProviderWrapper(props: any) {
     }, [appState.user]);
 
     const setAccessToken = (token: string) => {
+        AuthenticationService.setUserToken(token);
         setAppState({ ...appState, isLoggedIn: true });
-        sessionStorage.setItem('authToken', token);
-    }
+    };
 
     const logOutUser = () => {
-        sessionStorage.removeItem('authToken');
+        AuthenticationService.removeUserToken();
         setAppState({ ...appState, isLoggedIn: false, user: null });
     };
 
     const setLoggedUser = (user: IUser, token: string) => {
-        sessionStorage.setItem('authToken', token);
+        AuthenticationService.setUserToken(token);
         setAppState({ ...appState, isLoggedIn: true, user });
     };
 

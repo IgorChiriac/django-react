@@ -6,10 +6,7 @@ export interface IRestaurantService{
 
 const UserService: IRestaurantService = {
   getRestaurants(): Promise<any>{
-    return axios.get('/api/v1/restaurants/?ordering=-reviews_avg', {
-      headers: {
-        'Authorization': `Bearer ${sessionStorage.getItem('authToken')}` 
-      }})
+    return axios.get('/api/v1/restaurants/?ordering=-reviews_avg')
   },
 }
 

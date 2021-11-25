@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProviderWrapper } from './context/AuthContext';
+import AuthenticationService from './services/authentification';
+
+if(AuthenticationService.isUserLoggedIn()){
+  AuthenticationService.setupAxiosInterceptors()
+}
 
 ReactDOM.render(
   <React.StrictMode>
