@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'health_check.db',  # stock Django health checkers
     'health_check.storage',
     'health_check.contrib.migrations',
+    'django_seed',
     # Your apps
     'src.users',
     'src.files',
