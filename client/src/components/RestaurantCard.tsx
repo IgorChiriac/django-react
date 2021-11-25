@@ -1,32 +1,25 @@
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-  Rating,
-  Box,
-} from "@mui/material";
+import { Card, CardMedia, CardContent, Typography, CardActions, Button, Rating, Box } from "@mui/material";
 import { useHistory } from "react-router";
 
 interface Props {
   restaurant: any;
+  isDetailView?: boolean;
 }
 
 const RestaurantCard = (props: Props) => {
   const history = useHistory();
+  const getCursor = () => (props.isDetailView ? "" : "cursor");
 
   return (
     <Card
       onClick={() => {
         history.push(`/restaurant/${props.restaurant.id}`);
       }}
-      sx={{ cursor: "pointer" }}
+      sx={{ cursor: getCursor() }}
     >
       <CardMedia
         component="img"
-        height="130"
+        height={props.isDetailView ? "320" : "130"}
         image={
           "https://phantom-marca.unidadeditorial.es/a7a94dd4627f134e5b87586e83a6cd44/resize/1320/f/webp/assets/multimedia/imagenes/2021/11/06/16362306284114.jpg"
         }

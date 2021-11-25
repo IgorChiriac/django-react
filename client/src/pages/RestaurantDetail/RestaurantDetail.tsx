@@ -1,76 +1,51 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import RestaurantsService from "../../services/restaurantsService";
 import { useParams } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import RestaurantCard from "../../components/RestaurantCard";
+import ApplicationBar from "../../components/ApplicationBar";
+import ReviewCard from "../../components/ReviewCard";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 const RestaurantDetail = () => {
   const params: any = useParams();
+  const [restaurant, setRestaurant] = useState(null);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    console.log("hey");
     RestaurantsService.getRestaurantDetail(params.id).then((res) => {
-      console.log(res);
+      setRestaurant(res.data);
     });
     RestaurantsService.getRestaurantReviews(params.id).then((res) => {
-      console.log(res);
+      setReviews(res.data.results);
     });
   }, []);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-  };
-
-  const theme = createTheme();
-
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            fullWidth
-            id="name"
-            label="Restaurant"
-            name="name"
-            autoComplete="name"
-            InputProps={{
-              readOnly: true,
-            }}
-            value="my resjajksd "
-          />
-
-          <TextField
-            margin="normal"
-            fullWidth
-            id="cuisine"
-            label="Cuisine type"
-            name="cuisine"
-            autoComplete="cuisine"
-            InputProps={{
-              readOnly: true,
-            }}
-            value="my resjajksd "
-          />
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Save
-          </Button>
-        </Box>
-      </Container>
-    </ThemeProvider>
+    <>
+      {restaurant && (
+        <>
+          <ApplicationBar />
+          <Container component="main" maxWidth="md" sx={{ backgroundColor: "white", padding: "20px" }}>
+            <RestaurantCard restaurant={restaurant} isDetailView />
+            <Typography gutterBottom variant="h5" component="div" marginTop={3}>
+              Reviews
+            </Typography>
+            <Grid container spacing={2} xs={12} alignItems="center" justifyContent="center">
+              {reviews &&
+                reviews.length &&
+                reviews.map((review) => (
+                  <Grid item xs={12} sm={4} md={3}>
+                    <ReviewCard review={review} />
+                  </Grid>
+                ))}
+            </Grid>
+          </Container>
+        </>
+      )}
+    </>
   );
 };
 
