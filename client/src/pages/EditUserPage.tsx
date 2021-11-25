@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AuthContext } from "../context/AuthContext";
-import UserService, {IUser} from "../services/userService";
+import userService, {IUser} from "../services/userService";
 import { useHistory, useParams } from 'react-router-dom'
 import { useFormik } from 'formik';
 
@@ -27,20 +23,20 @@ export default function EditUserPage() {
   })
 
   useEffect(()=>{
-    UserService.getUserById(userId).then((res: { data: IUser }) => {
+    userService.getUserById(userId).then((res: { data: IUser }) => {
       setCurrentUser(res.data)
     })
     .catch((error) => {});
   }, [userId])
 
   const onDeleteUser = ()=>{
-    UserService.deleteUserById(userId).then(()=>{
+    userService.deleteUserById(userId).then(()=>{
       history.push('/users')
     })
   }
 
   const onUpdateUser = (data: any)=>{
-    UserService.updateUser(data)
+    userService.updateUser(data)
   }
 
   const formik = useFormik({

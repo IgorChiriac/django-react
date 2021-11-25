@@ -6,7 +6,7 @@ export interface IRestaurantService {
   getRestaurantReviews: (restaurantId: string) => Promise<any>;
 }
 
-const UserService: IRestaurantService = {
+const userService: IRestaurantService = {
   getRestaurants(): Promise<any> {
     return axios.get("/api/v1/restaurants/?ordering=-reviews_avg");
   },
@@ -19,4 +19,4 @@ const UserService: IRestaurantService = {
   },
 };
 
-export default UserService;
+export default userService;

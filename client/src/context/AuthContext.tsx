@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import UserService, { IUser } from "../services/userService";
+import userService, { IUser } from "../services/userService";
 import AuthenticationService from "../services/authentification";
 
 const AuthContext = React.createContext({} as any);
@@ -15,7 +15,7 @@ function AuthProviderWrapper(props: any) {
   });
 
   const loadCurrentUser = () => {
-    UserService.getCurrentUser()
+    userService.getCurrentUser()
       .then((response) => {
         setAppState({ isLoggedIn: true, user: response.data });
       })
