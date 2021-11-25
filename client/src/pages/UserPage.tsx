@@ -104,7 +104,7 @@ export default function UserPage() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {users.results.map((user: any, index: number) => (
+                        {users.results.map((user: IUser, index: number) => (
                             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell component="th" scope="row">
                                     {user.username}

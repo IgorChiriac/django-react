@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Login from "./pages/Login";
+import LoginPage from "./pages/LoginPage";
 import SignUp from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
@@ -24,7 +24,7 @@ function App() {
             path="/login"
             isAuthenticated={isLoggedIn}
           >
-            <Login />
+            <LoginPage />
           </PublicRoute>
           <PublicRoute
             path="/signup"
