@@ -14,22 +14,26 @@ function AuthProviderWrapper(props: any) {
         user: null,
     });
 
+    const loadCurrentUser = () => {
+        UserService.getCurrentUser()
+            .then((response) => {
+                setAppState({ isLoggedIn: true, user: response.data });
+            })
+            .catch((err) => {
+                setAppState({ isLoggedIn: false, user: null });
+            });
+    };
+
     useEffect(() => {
         if (AuthenticationService.isUserLoggedIn() && !appState.user) {
             setAppState({ isLoggedIn: true, user: null });
-            UserService.getCurrentUser()
-                .then((response) => {
-                    setAppState({ isLoggedIn: true, user: response.data });
-                })
-                .catch((err) => {
-                    setAppState({ isLoggedIn: false, user: null });
-                });
+            loadCurrentUser();
         }
     }, [appState.user]);
 
-    const setAccessToken = (token: string) => {
+    const logInUser = (token: string) => {
         AuthenticationService.setUserToken(token);
-        setAppState({ ...appState, isLoggedIn: true });
+        loadCurrentUser();
     };
 
     const logOutUser = () => {
@@ -49,7 +53,7 @@ function AuthProviderWrapper(props: any) {
                 currentUser: appState.user,
                 logOutUser,
                 setLoggedUser,
-                setAccessToken,
+                logInUser,
             }}
         >
             {props.children}

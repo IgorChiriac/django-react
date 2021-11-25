@@ -41,7 +41,7 @@ function LoadingIndicator() {
 
 export default function LoginPage() {
     const [loginState, setLoginState] = useState({ loading: false, error: null });
-    const { setAccessToken } = useContext(AuthContext);
+    const { logInUser } = useContext(AuthContext);
     let history = useHistory();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -53,8 +53,7 @@ export default function LoginPage() {
         setLoginState({ ...loginState, loading: true });
         AuthenticationService.login(username, password)
             .then((res) => {
-              console.log(res.data.access)
-              setAccessToken(res.data.access)
+              logInUser(res.data.access)
               history.push('/')
             })
             .catch((error) => {
