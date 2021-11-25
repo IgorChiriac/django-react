@@ -13,7 +13,7 @@ const RestaurantCard = (props: Props) => {
   return (
     <Card
       onClick={() => {
-        history.push(`/restaurant/${props.restaurant.id}`);
+        !props.isDetailView && history.push(`/restaurant/${props.restaurant.id}`);
       }}
       sx={{ cursor: getCursor() }}
     >

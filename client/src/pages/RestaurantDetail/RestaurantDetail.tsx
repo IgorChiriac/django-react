@@ -8,6 +8,7 @@ import ApplicationBar from "../../components/ApplicationBar";
 import ReviewCard from "../../components/ReviewCard";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import NewReview from "../../components/NewReview";
 
 const RestaurantDetail = () => {
   const params: any = useParams();
@@ -33,7 +34,14 @@ const RestaurantDetail = () => {
             <Typography gutterBottom variant="h5" component="div" marginTop={3}>
               Reviews
             </Typography>
-            <Grid container spacing={2} xs={12} alignItems="center" justifyContent="center">
+            <Typography gutterBottom variant="h6" component="div" marginTop={3}>
+              Leave your review
+            </Typography>
+            <NewReview />
+            <Typography gutterBottom variant="h6" component="div" marginTop={3}>
+              People's reviews
+            </Typography>
+            <Grid container spacing={2} xs={12} marginTop={2} alignItems="center" justifyContent="center">
               {reviews &&
                 reviews.length &&
                 reviews.map((review) => (
