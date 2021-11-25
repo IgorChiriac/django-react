@@ -23,7 +23,7 @@ const ApplicationBar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const { currentUser, isLoggedIn, logOutUser } = useContext(AuthContext);
+  const { currentUser, logOutUser } = useContext(AuthContext);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -87,15 +87,21 @@ const ApplicationBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem key={"restaurants"} onClick={handleCloseNavMenu} component={Link} to={"/"}>
-                <Typography textAlign="center">
-                  Restaurants
-                </Typography>
+              <MenuItem
+                key={"restaurants"}
+                onClick={handleCloseNavMenu}
+                component={Link}
+                to={"/"}
+              >
+                <Typography textAlign="center">Restaurants</Typography>
               </MenuItem>
-              <MenuItem key={"users"} onClick={handleCloseNavMenu} component={Link} to={"/users"}>
-                <Typography textAlign="center">
-                  Users
-                </Typography>
+              <MenuItem
+                key={"users"}
+                onClick={handleCloseNavMenu}
+                component={Link}
+                to={"/users"}
+              >
+                <Typography textAlign="center">Users</Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -152,24 +158,20 @@ const ApplicationBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                  <MenuItem key={'logout'} onClick={() => onLogoutClick()}>
-                    <Typography textAlign="center">Log out</Typography>
-                  </MenuItem>
+                <MenuItem key={"logout"} onClick={() => onLogoutClick()}>
+                  <Typography textAlign="center">Log out</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           ) : (
             <>
-            <MenuItem key={"login"} component={Link} to={"/login"}>
-              <Typography textAlign="center">
-                Login
-              </Typography>
-            </MenuItem>
-                        <MenuItem key={"login"} component={Link} to={"/signup"}>
-                        <Typography textAlign="center">
-                          Sign Up
-                        </Typography>
-                      </MenuItem>
-                      </>
+              <MenuItem key={"login"} component={Link} to={"/login"}>
+                <Typography textAlign="center">Login</Typography>
+              </MenuItem>
+              <MenuItem key={"login"} component={Link} to={"/signup"}>
+                <Typography textAlign="center">Sign Up</Typography>
+              </MenuItem>
+            </>
           )}
         </Toolbar>
       </Container>

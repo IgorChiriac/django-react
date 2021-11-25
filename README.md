@@ -1,4 +1,5 @@
 # Django Rest Framework boilerplate
+
 ## API Docs
 
 API documentation is automatically generated using Swagger. You can view documention by visiting this [link](http://localhost:8000/swagger).
