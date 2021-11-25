@@ -9,6 +9,7 @@ import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import {useContext} from 'react'
 import { AuthContext } from "./context/AuthContext";
+import RestaurantDetail from "./pages/RestaurantDetail/RestaurantDetail";
 
 function App() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -19,6 +20,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route path="/restaurant/:id">
+            <RestaurantDetail />
           </Route>
 
           <PublicRoute

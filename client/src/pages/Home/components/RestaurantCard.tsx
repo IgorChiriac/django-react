@@ -1,14 +1,17 @@
 import { Card, CardMedia, CardContent, Typography, CardActions, Button, Rating, Box } from "@mui/material";
+import { useHistory } from "react-router";
 
 interface Props {
   restaurant: any;
 }
 
 const RestaurantCard = (props: Props) => {
+  const history = useHistory();
+
   return (
     <Card
       onClick={() => {
-        alert("clicked");
+        history.push(`/restaurant/${props.restaurant.id}`);
       }}
       sx={{ cursor: "pointer" }}
     >
