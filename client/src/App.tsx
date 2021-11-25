@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
+import UserPage from "./pages/UserPage";
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import {useContext} from 'react'
@@ -31,12 +32,12 @@ function App() {
           >
             <SignUp />
           </PublicRoute>
-          <PublicRoute
+          <PrivateRoute
             path="/users"
-            isAuthenticated={isLoggedIn && currentUser?.is_admin}
+            isAuthenticated={isLoggedIn}
           >
-            <SignUp />
-          </PublicRoute>
+            <UserPage />
+          </PrivateRoute>
           <Route path="*">
             <NotFound />
           </Route>

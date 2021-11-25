@@ -18,7 +18,7 @@ function AuthProviderWrapper(props: any) {
 
     useEffect(() => {
         const authToken = sessionStorage.getItem('authToken');
-        if (authToken) {
+        if (authToken && !appState.user) {
             UserService.getCurrentUser().then((response) => {
                 setAppState({ loading: false, isLoggedIn: true, user: response.data });
             });

@@ -19,7 +19,7 @@ function PublicRoute({ children, isAuthenticated, ...rest }: IPublicRoute) {
           ) : (
             <Redirect
               to={{
-                pathname: '/',
+                pathname: '/users',
                 state: { from: location }
               }}
             />
