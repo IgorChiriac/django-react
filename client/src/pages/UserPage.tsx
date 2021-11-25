@@ -16,8 +16,11 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import UserService, { IUser } from "../services/user";
+import UserService, { IUser } from "../services/userService";
 import ApplicationBar from "../components/ApplicationBar";
+import { Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 interface TablePaginationActionsProps {
   count: number;
@@ -121,7 +124,7 @@ export default function UserPage() {
   return (
     <>
     <ApplicationBar />
-    <Container maxWidth="sm">
+    <Container sx={{ mt: 8 }}>
       {users && (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -131,6 +134,7 @@ export default function UserPage() {
                 <TableCell align="right">First Name</TableCell>
                 <TableCell align="right">Last Name</TableCell>
                 <TableCell align="right">Is Admin</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -145,6 +149,11 @@ export default function UserPage() {
                   <TableCell align="right">{user.first_name}</TableCell>
                   <TableCell align="right">{user.last_name}</TableCell>
                   <TableCell align="right">{user.is_admin}</TableCell>
+                  <TableCell align="right">
+                    <div>
+                      <Link component={RouterLink} to={`/users/${user.id}/`}>Edit</Link>
+                    </div>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

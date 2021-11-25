@@ -16,9 +16,9 @@ class UserSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'profile_picture',
+            'email',
             'is_admin',
         )
-        read_only_fields = ('username',)
 
 
 class CreateUserSerializer(serializers.ModelSerializer):

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -6,51 +6,50 @@ import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthContext } from "../context/AuthContext";
-import UserService from "../services/userService";
-
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Igor Chiriac "}
-      <Link color="inherit" href="https://www.linkedin.com/in/igor-chiriac/">
-        LinkedIn
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import UserService, {IUser} from "../services/userService";
+import { useHistory, useParams } from 'react-router-dom'
+import { useFormik } from 'formik';
 
 const theme = createTheme();
 
-export default function SignIn() {
-  const { isLoading, setLoggedUser } = React.useContext(AuthContext);
+export default function EditUserPage() {
+  const { id: userId }: any = useParams()
+  const history = useHistory()
+  const [currentUser, setCurrentUser] = useState({
+    username: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    is_admin: false,
+  })
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    UserService.createUser({
-      username: String(data.get("username")),
-      password: String(data.get("password")),
+  useEffect(()=>{
+    UserService.getUserById(userId).then((res: { data: IUser }) => {
+      setCurrentUser(res.data)
     })
-      .then((res) => {
-        const { tokens, ...user } = res.data;
-        setLoggedUser(user, tokens.access);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+    .catch((error) => {});
+  }, [userId])
+
+  const onDeleteUser = ()=>{
+    UserService.deleteUserById(userId).then(()=>{
+      history.push('/users')
+    })
+  }
+
+  const onUpdateUser = (data: any)=>{
+    UserService.updateUser(data)
+  }
+
+  const formik = useFormik({
+    initialValues: currentUser,
+    enableReinitialize: true,
+    onSubmit: (values) => {
+      onUpdateUser(values);
+    },
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -64,15 +63,9 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={formik.handleSubmit}
             sx={{ mt: 1 }}
           >
             <TextField
@@ -84,16 +77,8 @@ export default function SignIn() {
               name="username"
               autoComplete="username"
               autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              value={formik.values.username}
+              onChange={formik.handleChange}
             />
             <TextField
               margin="normal"
@@ -102,6 +87,8 @@ export default function SignIn() {
               label="First Name"
               name="first_name"
               autoComplete="first_name"
+              value={formik.values.first_name}
+              onChange={formik.handleChange}
             />
             <TextField
               margin="normal"
@@ -110,36 +97,38 @@ export default function SignIn() {
               label="Last Name"
               name="last_name"
               autoComplete="last_name"
+              value={formik.values.last_name}
+              onChange={formik.handleChange}
             />
             <TextField
               margin="normal"
               fullWidth
-              type="email"
               id="email"
+              name="email"
               label="Email"
-              name="Email"
               autoComplete="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
             />
 
             <Button
               type="submit"
-              disabled={isLoading}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up!
+              Update
             </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="/login" variant="body2">
-                  {"Have an account? Sign In"}
-                </Link>
-              </Grid>
-            </Grid>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={()=> onDeleteUser()}
+            >
+              Delete User
+            </Button>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
