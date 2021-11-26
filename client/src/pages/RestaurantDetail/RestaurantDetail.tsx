@@ -16,40 +16,30 @@ const RestaurantDetail = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
+    getRestaurantDetail();
+  }, []);
+
+  const getRestaurantDetail = () => {
     RestaurantsService.getRestaurantDetail(params.id).then((res) => {
       setRestaurant(res.data);
+      setReviews(res.data.reviews_summary);
     });
-    RestaurantsService.getRestaurantReviews(params.id).then((res) => {
-      setReviews(res.data.results);
-    });
-  }, []);
+  };
 
   return (
     <>
       {restaurant && (
         <>
           <ApplicationBar />
-          <Container
-            component="main"
-            maxWidth="md"
-            sx={{ backgroundColor: "white", padding: "20px" }}
-          >
+          <Container component="main" maxWidth="md" sx={{ backgroundColor: "white", padding: "20px" }}>
             <RestaurantCard restaurant={restaurant} isDetailView />
             <Typography gutterBottom variant="h5" component="div" marginTop={3}>
               Reviews
             </Typography>
-            <NewReview restaurantId={params.id} />
             <Typography gutterBottom variant="h6" component="div" marginTop={3}>
-              People's reviews
+              Most relevant reviews
             </Typography>
-            <Grid
-              container
-              spacing={2}
-              xs={12}
-              marginTop={2}
-              alignItems="center"
-              justifyContent="center"
-            >
+            <Grid container spacing={2} xs={12} marginTop={2} marginBottom={3} alignItems="center" justifyContent="center">
               {reviews &&
                 reviews.length &&
                 reviews.map((review) => (
@@ -58,6 +48,7 @@ const RestaurantDetail = () => {
                   </Grid>
                 ))}
             </Grid>
+            <NewReview restaurantId={params.id} refresh={getRestaurantDetail} />
           </Container>
         </>
       )}
