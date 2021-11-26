@@ -11,21 +11,31 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import RestaurantsService from "../services/restaurantsService";
+import MobileDatePicker from '@mui/lab/MobileDatePicker';
+import { useFormik } from "formik";
+import dayjs from 'dayjs'
 
 interface Props {
   restaurantId: string;
 }
 
 const NewReview = (props: Props) => {
-  const [reviewScore, setReviewScore] = useState(0);
-  const [comment, setComment] = useState("");
-  const sendReview = () => {
-    RestaurantsService.setReview(props.restaurantId, reviewScore, comment);
-  };
+  const formik = useFormik({
+    initialValues: {
+      comment: '',
+      num_stars: 0,
+      visit_date: dayjs().format('YYYY-MM-DD')
+    },
+    enableReinitialize: true,
+    onSubmit: (values) => {
+      RestaurantsService.createReview(props.restaurantId, values)
+    },
+  });
 
   return (
     <Box
       display="flex"
+      component="form" onSubmit={formik.handleSubmit}
       flexDirection="column"
       sx={{
         border: "1px solid black",
@@ -38,22 +48,28 @@ const NewReview = (props: Props) => {
       </Typography>
       <Rating
         name="review"
-        value={reviewScore}
+        value={formik.values.num_stars}
         onChange={(e, newValue) => {
-          console.log(e);
-          //@ts-ignore
-          setReviewScore(newValue);
+          const num_stars = newValue ? newValue : 0;
+          formik.setFieldValue("num_stars", num_stars);
         }}
       />
+      <Box component="div" sx={{mt: 4}}>
+        <MobileDatePicker
+          label="Date of Visit"
+          inputFormat="YYYY-MM-DD"
+          value={formik.values.visit_date}
+          onChange={(newValue: Date | null)=>{
+            formik.setFieldValue("visit_date", dayjs(newValue).format('YYYY-MM-DD'));
+          }}
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </Box>
       <TextField
         multiline
         rows={4}
-        value={comment}
-        onChange={(e) => {
-          console.log(e);
-          //@ts-ignore
-          setComment(e.target.value);
-        }}
+        value={formik.values.comment}
+        onChange={formik.handleChange}
         size="small"
         margin="normal"
         id="comment"
@@ -62,7 +78,7 @@ const NewReview = (props: Props) => {
       />
       <Button
         variant="text"
-        onClick={sendReview}
+        type="submit"
         sx={{
           mt: 3,
           mb: 2,
@@ -72,7 +88,7 @@ const NewReview = (props: Props) => {
           border: "1px solid black",
         }}
       >
-        Send review
+        Add review
       </Button>
     </Box>
   );

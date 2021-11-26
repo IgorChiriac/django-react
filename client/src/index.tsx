@@ -5,6 +5,12 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProviderWrapper } from "./context/AuthContext";
 import AuthenticationService from "./services/authentification";
+import DateAdapter from '@mui/lab/AdapterDayjs';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import dayjs from "dayjs";
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 
 if (AuthenticationService.isUserLoggedIn()) {
   AuthenticationService.setupAxiosInterceptors();
@@ -12,9 +18,11 @@ if (AuthenticationService.isUserLoggedIn()) {
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthProviderWrapper>
-      <App />
-    </AuthProviderWrapper>
+    <LocalizationProvider dateAdapter={DateAdapter}>
+      <AuthProviderWrapper>
+        <App />
+      </AuthProviderWrapper>
+    </LocalizationProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

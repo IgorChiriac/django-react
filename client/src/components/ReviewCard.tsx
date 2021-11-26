@@ -8,11 +8,13 @@ import {
   Rating,
   Box,
 } from "@mui/material";
+import dayjs from 'dayjs'
 
 interface Props {
   review: any;
 }
 
+// @ts-ignore
 const ReviewCard = (props: Props) => {
   return (
     <Card>
@@ -22,7 +24,7 @@ const ReviewCard = (props: Props) => {
           {props.review.author}
         </Typography>
         <Typography gutterBottom variant="caption" component="div">
-          {new Date(props.review.visit_date).toLocaleDateString()}
+          {dayjs(props.review.visit_date).fromNow()}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {props.review.comment}

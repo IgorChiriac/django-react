@@ -3,10 +3,7 @@ import {
   CardMedia,
   CardContent,
   Typography,
-  CardActions,
-  Button,
   Rating,
-  Box,
 } from "@mui/material";
 import { useHistory } from "react-router";
 
