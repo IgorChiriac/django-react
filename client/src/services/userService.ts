@@ -36,7 +36,7 @@ const userService: IUserService = {
   },
 
   updateUser(data: IUser): Promise<any> {
-    const {id, ...user} = data
+    const { id, ...user } = data;
     return axios.patch(`/api/v1/users/${id}/`, user);
   },
 

@@ -1,4 +1,14 @@
-import { Card, CardMedia, CardContent, Typography, CardActions, Button, Rating, Box, TextField } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  Rating,
+  Box,
+  TextField,
+} from "@mui/material";
 import { useState } from "react";
 import RestaurantsService from "../services/restaurantsService";
 
@@ -14,7 +24,15 @@ const NewReview = (props: Props) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" sx={{ border: "1px solid black", padding: "3rem", backgroundColor: "#fdfdfd" }}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      sx={{
+        border: "1px solid black",
+        padding: "3rem",
+        backgroundColor: "#fdfdfd",
+      }}
+    >
       <Typography gutterBottom variant="h6" component="div">
         Leave your review
       </Typography>
@@ -45,7 +63,14 @@ const NewReview = (props: Props) => {
       <Button
         variant="text"
         onClick={sendReview}
-        sx={{ mt: 3, mb: 2, backgroundColor: "#a899ff", width: "160px", color: "black", border: "1px solid black" }}
+        sx={{
+          mt: 3,
+          mb: 2,
+          backgroundColor: "#a899ff",
+          width: "160px",
+          color: "black",
+          border: "1px solid black",
+        }}
       >
         Send review
       </Button>

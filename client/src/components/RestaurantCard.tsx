@@ -1,4 +1,13 @@
-import { Card, CardMedia, CardContent, Typography, CardActions, Button, Rating, Box } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  Rating,
+  Box,
+} from "@mui/material";
 import { useHistory } from "react-router";
 
 interface Props {
@@ -13,7 +22,8 @@ const RestaurantCard = (props: Props) => {
   return (
     <Card
       onClick={() => {
-        !props.isDetailView && history.push(`/restaurant/${props.restaurant.id}`);
+        !props.isDetailView &&
+          history.push(`/restaurant/${props.restaurant.id}`);
       }}
       sx={{ cursor: getCursor() }}
     >

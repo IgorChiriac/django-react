@@ -5,7 +5,11 @@ export interface IRestaurantService {
   getRestaurants: () => Promise<any>;
   getRestaurantDetail: (restaurantId: string) => Promise<any>;
   getRestaurantReviews: (restaurantId: string) => Promise<any>;
-  setReview: (restaurantId: string, reviewScore: Number, comment: string) => Promise<any>;
+  setReview: (
+    restaurantId: string,
+    reviewScore: Number,
+    comment: string
+  ) => Promise<any>;
 }
 
 const userService: IRestaurantService = {

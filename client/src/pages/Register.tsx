@@ -39,10 +39,11 @@ export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    userService.createUser({
-      username: String(data.get("username")),
-      password: String(data.get("password")),
-    })
+    userService
+      .createUser({
+        username: String(data.get("username")),
+        password: String(data.get("password")),
+      })
       .then((res) => {
         const { tokens, ...user } = res.data;
         setLoggedUser(user, tokens.access);
@@ -70,11 +71,7 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required

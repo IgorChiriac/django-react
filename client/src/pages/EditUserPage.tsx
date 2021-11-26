@@ -4,40 +4,45 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import userService, {IUser} from "../services/userService";
-import { useHistory, useParams } from 'react-router-dom'
-import { useFormik } from 'formik';
+import userService, { IUser } from "../services/userService";
+import { useHistory, useParams } from "react-router-dom";
+import { useFormik } from "formik";
 
 const theme = createTheme();
+const label = { inputProps: { "aria-label": "Admin User" } };
 
 export default function EditUserPage() {
-  const { id: userId }: any = useParams()
-  const history = useHistory()
+  const { id: userId }: any = useParams();
+  const history = useHistory();
   const [currentUser, setCurrentUser] = useState({
-    username: '',
-    first_name: '',
-    last_name: '',
-    email: '',
+    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
     is_admin: false,
-  })
+  });
 
-  useEffect(()=>{
-    userService.getUserById(userId).then((res: { data: IUser }) => {
-      setCurrentUser(res.data)
-    })
-    .catch((error) => {});
-  }, [userId])
+  useEffect(() => {
+    userService
+      .getUserById(userId)
+      .then((res: { data: IUser }) => {
+        setCurrentUser(res.data);
+      })
+      .catch((error) => {});
+  }, [userId]);
 
-  const onDeleteUser = ()=>{
-    userService.deleteUserById(userId).then(()=>{
-      history.push('/users')
-    })
-  }
+  const onDeleteUser = () => {
+    userService.deleteUserById(userId).then(() => {
+      history.push("/users");
+    });
+  };
 
-  const onUpdateUser = (data: any)=>{
-    userService.updateUser(data)
-  }
+  const onUpdateUser = (data: any) => {
+    userService.updateUser(data);
+  };
 
   const formik = useFormik({
     initialValues: currentUser,
@@ -46,6 +51,10 @@ export default function EditUserPage() {
       onUpdateUser(values);
     },
   });
+
+  const onAdminFieldChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    formik.setFieldValue("is_admin", event.target.checked);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -59,11 +68,7 @@ export default function EditUserPage() {
             alignItems: "center",
           }}
         >
-          <Box
-            component="form"
-            onSubmit={formik.handleSubmit}
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -107,6 +112,18 @@ export default function EditUserPage() {
               onChange={formik.handleChange}
             />
 
+            <FormControlLabel
+              control={
+                <Checkbox
+                  {...label}
+                  checked={formik.values.is_admin}
+                  onChange={onAdminFieldChange}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+              }
+              label="Is Admin"
+            />
+
             <Button
               type="submit"
               fullWidth
@@ -119,7 +136,7 @@ export default function EditUserPage() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={()=> onDeleteUser()}
+              onClick={() => onDeleteUser()}
             >
               Delete User
             </Button>
