@@ -54,7 +54,7 @@ const NewReview = (props: Props) => {
           formik.setFieldValue("num_stars", num_stars);
         }}
       />
-      <Box component="div" sx={{mt: 4}}>
+      <Box component="div" sx={{mt: 4, display: 'flex', justifyContent: 'flex-start'}}>
         <MobileDatePicker
           label="Date of Visit"
           inputFormat="YYYY-MM-DD"
