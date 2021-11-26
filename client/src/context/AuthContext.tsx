@@ -10,7 +10,7 @@ interface IUserState {
 
 function AuthProviderWrapper(props: any) {
   const [appState, setAppState] = useState<IUserState>({
-    isLoggedIn: false,
+    isLoggedIn: AuthenticationService.isUserLoggedIn(),
     user: null,
   });
 

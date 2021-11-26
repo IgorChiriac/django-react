@@ -1,5 +1,5 @@
 from .models import Restaurant, Review
-from .serializers import RestaurantSerializer, ReviewSerializer
+from .serializers import RestaurantSerializer, ReviewSerializer, RestaurantWithReviewsSerializer
 from rest_framework import generics
 from django.db.models import Avg, Count
 from rest_framework import filters
@@ -18,8 +18,18 @@ class RestaurantList(generics.ListCreateAPIView):
             reviews_avg=Avg('reviews__num_stars')
         )
 
+class RestaurantWithReviewsDetail(generics.RetrieveAPIView):
+    queryset = Restaurant.objects.all()
+    serializer_class = RestaurantWithReviewsSerializer
+    permission_classes = [AdminOnly]
 
-class RestaurantDetail(generics.RetrieveUpdateDestroyAPIView):
+    def get_queryset(self):
+        return Restaurant.objects.annotate(
+            reviews_count=Count('reviews'),
+            reviews_avg=Avg('reviews__num_stars')
+        )
+
+class RestaurantDetail(generics.UpdateAPIView, generics.DestroyAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [AdminOnly]

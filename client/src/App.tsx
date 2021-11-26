@@ -19,12 +19,12 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route exact path="/">
+          <PrivateRoute exact path="/" isAuthenticated={isLoggedIn}>
             <Home />
-          </Route>
-          <Route path="/restaurant/:id">
+          </PrivateRoute>
+          <PrivateRoute path="/restaurant/:id" isAuthenticated={isLoggedIn}>
             <RestaurantDetail />
-          </Route>
+          </PrivateRoute>
           <PublicRoute path="/login" isAuthenticated={isLoggedIn}>
             <LoginPage />
           </PublicRoute>
