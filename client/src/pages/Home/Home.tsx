@@ -23,17 +23,13 @@ const Home = () => {
     <>
       <ThemeProvider theme={theme}>
         <ApplicationBar />
-        <Container
-          component="main"
-          maxWidth="md"
-          sx={{ backgroundColor: "white", padding: "20px" }}
-        >
+        <Container component="main" maxWidth="md" sx={{ backgroundColor: "white", padding: "20px" }}>
           <CssBaseline />
+          <Typography gutterBottom variant="h3" component="div">
+            Rate the taste
+          </Typography>
           <Box sx={{ border: "2px solid #3e3750", borderRadius: "13px", backgroundColor: "#e9e6e6" }}>
             <img src={mainImage} style={{ objectFit: "cover", borderRadius: "13px" }} width="100%" height="200px" />
-            <Typography gutterBottom variant="h5" component="div">
-              Rate the taste
-            </Typography>
             <Typography gutterBottom variant="overline" component="div">
               Find the best restaurants around! Comments and reviews for everyone
             </Typography>
