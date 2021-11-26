@@ -9,15 +9,25 @@ import ApplicationBar from "../../components/ApplicationBar";
 import Box from "@mui/system/Box";
 import mainImage from "./restaurantreview.jpeg";
 import Typography from "@mui/material/Typography";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Pagination from "@mui/material/Pagination";
 
 const Home = () => {
-  const [restaurants, setRestaurants] = useState([]);
+  const [restaurants, setRestaurants] = useState([] as any[]);
   const theme = createTheme();
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(30);
+
   useEffect(() => {
-    RestaurantsService.getRestaurants().then((res) => {
+    getRestaurantsPage();
+  }, [page]);
+
+  const getRestaurantsPage = () => {
+    RestaurantsService.getRestaurants(page).then((res) => {
       setRestaurants(res.data.results);
+      setTotal(res.data.count);
     });
-  }, []);
+  };
 
   return (
     <>
@@ -38,11 +48,20 @@ const Home = () => {
             {restaurants &&
               restaurants.length &&
               restaurants.map((restaurant) => (
-                <Grid item xs={4}>
+                <Grid item xs={12} sm={4} md={3}>
                   <RestaurantCard restaurant={restaurant} />
                 </Grid>
               ))}
           </Grid>
+          <div style={{ display: "flex", padding: "2rem", justifyContent: "center" }}>
+            <Pagination
+              count={total / 10}
+              color="secondary"
+              onChange={(e, newValue) => {
+                console.log(e, setPage(newValue));
+              }}
+            />
+          </div>
         </Container>
       </ThemeProvider>
     </>
