@@ -2,7 +2,7 @@ from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.response import Response
+from django.contrib.auth.models import Permission
 
 from src.users.models import User
 from src.users.permissions import ListAdminOnly, AnonCreateAndUpdateOwnerOnly
@@ -17,6 +17,16 @@ class UserViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.Cre
     queryset = User.objects.all()
     serializers = {'default': UserSerializer, 'create': CreateUserSerializer}
     permissions = {'default': (ListAdminOnly, AnonCreateAndUpdateOwnerOnly,)}
+
+    def perform_update(self, serializer):
+        instance = self.get_object()
+        permission = Permission.objects.get(name='Can manage users and restaurants.')
+        if "is_admin" in self.request.data:
+            if self.request.data.get("is_admin") == True or self.request.data.get("is_admin") == 'true': 
+                instance.user_permissions.add(permission)
+            else:
+                instance.user_permissions.remove(permission)
+        serializer.save()
 
     def get_serializer_class(self):
         return self.serializers.get(self.action, self.serializers['default'])

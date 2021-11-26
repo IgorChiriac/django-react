@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from src.users.models import User
 from src.common.serializers import ThumbnailerJSONSerializer
+from django.contrib.auth.models import Permission
 
 
 class UserSerializer(serializers.ModelSerializer):
