@@ -17,7 +17,7 @@ const userService: IRestaurantService = {
   },
 
   getRestaurantDetail(restaurantId): Promise<any> {
-    return axios.get(`/api/v1/restaurants/detail/${restaurantId}/`);
+    return axios.get(`/api/v1/restaurants/${restaurantId}/details`);
   },
   getRestaurantReviews(restaurantId): Promise<any> {
     return axios.get(`/api/v1/restaurants/${restaurantId}/reviews`);
