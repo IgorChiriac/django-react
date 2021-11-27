@@ -15,16 +15,20 @@ const RestaurantDetail = () => {
   const [restaurant, setRestaurant] = useState(null);
   const [reviews, setReviews] = useState([]);
 
-  useEffect(() => {
-    getRestaurantDetail();
-  }, []);
-
+  
   const getRestaurantDetail = () => {
     RestaurantsService.getRestaurantDetail(params.id).then((res) => {
       setRestaurant(res.data);
       setReviews(res.data.reviews_summary);
     });
   };
+  
+  useEffect(() => {
+    RestaurantsService.getRestaurantDetail(params.id).then((res) => {
+      setRestaurant(res.data);
+      setReviews(res.data.reviews_summary);
+    });
+  }, [params.id]);
 
   return (
     <>

@@ -1,12 +1,8 @@
 import {
   Card,
-  CardMedia,
   CardContent,
   Typography,
-  CardActions,
-  Button,
   Rating,
-  Box,
 } from "@mui/material";
 import dayjs from "dayjs";
 
