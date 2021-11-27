@@ -9,7 +9,6 @@ import ApplicationBar from "../../components/ApplicationBar";
 import Box from "@mui/system/Box";
 import mainImage from "./restaurantreview.jpeg";
 import Typography from "@mui/material/Typography";
-import InfiniteScroll from "react-infinite-scroll-component";
 import Pagination from "@mui/material/Pagination";
 
 const Home = () => {

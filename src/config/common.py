@@ -1,17 +1,15 @@
 import os
-import sentry_sdk
 import sys
 import dotenv
-
+from pathlib import Path
 from datetime import timedelta
-from sentry_sdk.integrations.django import DjangoIntegration
 from os.path import join
 
 TESTING = sys.argv[1:2] == ['test']
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-if not TESTING:
+if not TESTING and os.path.isfile(os.path.join(ROOT_DIR, ".env")):
     dotenv.read_dotenv(ROOT_DIR)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,7 +36,6 @@ INSTALLED_APPS = (
     'health_check.db',  # stock Django health checkers
     'health_check.storage',
     'health_check.contrib.migrations',
-    'django_seed',
     # Your apps
     'src.users',
     'src.files',
@@ -70,9 +67,6 @@ EMAIL_FROM = os.getenv('EMAIL_FROM', 'noreply@somehost.local')
 
 ADMINS = ()
 
-# Sentry
-sentry_sdk.init(dsn=os.getenv('SENTRY_DSN', ''), integrations=[DjangoIntegration()])
-
 # CORS
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -102,7 +96,7 @@ LOGIN_REDIRECT_URL = '/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_ROOT = os.path.normpath(join(os.path.dirname(BASE_DIR), 'static'))
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [os.path.join(os.path.dirname(BASE_DIR), 'client/build/static')]
 STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -120,7 +114,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': STATICFILES_DIRS,
+        'DIRS': [os.path.join(os.path.dirname(BASE_DIR), 'client/build/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -273,3 +267,10 @@ SIMPLE_JWT = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
+
+options = DATABASES['default'].get('OPTIONS', {})
+options.pop('sslmode', None)

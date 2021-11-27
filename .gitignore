@@ -129,3 +129,5 @@ media/*
 
 /frontend/npm-debug.log*
 /frontend/yarn-error.log*
+
+/src/staticfiles

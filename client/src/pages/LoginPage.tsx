@@ -75,7 +75,6 @@ export default function LoginPage() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        {loginState.loading && <LoadingIndicator />}
         <Box
           sx={{
             marginTop: 8,
@@ -83,7 +82,8 @@ export default function LoginPage() {
             flexDirection: "column",
             alignItems: "center",
           }}
-        >
+          >
+          {loginState.loading && <LoadingIndicator />}
           {loginState.error && (
             <Alert severity="error">{loginState.error}</Alert>
           )}
@@ -95,6 +95,7 @@ export default function LoginPage() {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
+              disabled={loginState.loading}
               margin="normal"
               required
               fullWidth
@@ -105,6 +106,7 @@ export default function LoginPage() {
               autoFocus
             />
             <TextField
+              disabled={loginState.loading}
               margin="normal"
               required
               fullWidth

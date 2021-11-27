@@ -1,0 +1,20 @@
+{
+  "name": "django-start",
+  "version": "1.0.0",
+  "description": "## API Docs",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd client && npm i && npm run start",
+    "build": "cd client && npm i && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IgorChiriac/django-react.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IgorChiriac/django-react/issues"
+  },
+  "homepage": "https://github.com/IgorChiriac/django-react#readme"
+}

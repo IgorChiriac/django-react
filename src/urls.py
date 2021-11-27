@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.conf.urls import url
 from django.contrib import admin
 from django.views.generic.base import RedirectView
+from django.views.generic.base import TemplateView
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -42,6 +43,8 @@ urlpatterns = [
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     url(r'^health/', include('health_check.urls')),
-    # the 'api-root' from django rest-frameworks default router
-    re_path(r'^$', RedirectView.as_view(url=reverse_lazy('api-root'), permanent=False)),
+    # the 'index.html' default template as default router
+    re_path('(^(?!(api|admin)).*$)',TemplateView.as_view(template_name="index.html")),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
