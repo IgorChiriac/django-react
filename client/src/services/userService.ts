@@ -22,7 +22,7 @@ interface ICreateUser {
   password: string;
 }
 
-const userService: IUserService = {
+const UserService: IUserService = {
   getCurrentUser(): Promise<any> {
     return axios.get("/api/v1/users/me/");
   },
@@ -53,4 +53,4 @@ const userService: IUserService = {
   },
 };
 
-export default userService;
+export default UserService;

@@ -16,7 +16,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import userService, { IUser } from "../services/userService";
+import UserService, { IUser } from "../services/userService";
 import ApplicationBar from "../components/ApplicationBar";
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
@@ -106,7 +106,7 @@ export default function UserPage() {
   const [users, setUsers] = useState<any | null>(null);
   const [page, setPage] = React.useState(0);
   useEffect(() => {
-    userService.getUserList(page).then((response) => {
+    UserService.getUserList(page).then((response) => {
       setUsers(response.data);
     });
   }, [page]);
@@ -116,7 +116,7 @@ export default function UserPage() {
     newPage: number
   ) => {
     setPage(newPage);
-    userService.getUserList(newPage).then((response) => {
+    UserService.getUserList(newPage).then((response) => {
       setUsers(response.data);
     });
   };

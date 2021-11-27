@@ -16,10 +16,11 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import userService, { IUser } from "../services/userService";
+import RestaurantService from "../services/restaurantsService";
 import ApplicationBar from "../components/ApplicationBar";
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import dayjs from 'dayjs'
 import Button from "@mui/material/Button";
 
 interface TablePaginationActionsProps {
@@ -102,22 +103,22 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export default function UserPage() {
-  const [users, setUsers] = useState<any | null>(null);
+export default function RestaurantsPage() {
+  const [restaurants, setRestaurants] = useState<any | null>(null);
   const [page, setPage] = React.useState(0);
   useEffect(() => {
-    userService.getUserList(page).then((response) => {
-      setUsers(response.data);
+    RestaurantService.getRestaurantsList().then((response) => {
+      setRestaurants(response.data);
     });
-  }, [page]);
+  }, []);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
-    userService.getUserList(newPage).then((response) => {
-      setUsers(response.data);
+    RestaurantService.getRestaurantsByPage(newPage).then((response) => {
+      setRestaurants(response.data);
     });
   };
 
@@ -125,33 +126,31 @@ export default function UserPage() {
     <>
       <ApplicationBar />
       <Container sx={{ mt: 8 }}>
-        {users && (
+        {restaurants && (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Username</TableCell>
-                  <TableCell align="right">First Name</TableCell>
-                  <TableCell align="right">Last Name</TableCell>
-                  <TableCell align="right">Is Admin</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell align="right">Cuisine Type</TableCell>
+                  <TableCell align="right">Created Date</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.results.map((user: IUser, index: number) => (
+                {restaurants.results.map((restaurant: any, index: number) => (
                   <TableRow
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {user.username}
+                      {restaurant.name}
                     </TableCell>
-                    <TableCell align="right">{user.first_name}</TableCell>
-                    <TableCell align="right">{user.last_name}</TableCell>
-                    <TableCell align="right">{user.is_admin}</TableCell>
+                    <TableCell align="right">{restaurant.cuisine_type}</TableCell>
+                    <TableCell align="right">{dayjs(restaurant.created_at).format('DD/MM/YYYY')}</TableCell>
                     <TableCell align="right">
                       <div>
-                        <Link component={RouterLink} to={`/users/${user.id}/`}>
+                        <Link component={RouterLink} to={`/restaurants/${restaurant.id}/`}>
                           Edit
                         </Link>
                       </div>
@@ -163,7 +162,7 @@ export default function UserPage() {
                 <TableRow>
                   <TablePagination
                     colSpan={3}
-                    count={users.count}
+                    count={restaurants.count}
                     rowsPerPage={10}
                     page={page}
                     SelectProps={{

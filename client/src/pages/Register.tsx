@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthContext } from "../context/AuthContext";
-import userService from "../services/userService";
+import UserService from "../services/userService";
 
 function Copyright(props: any) {
   return (
@@ -39,7 +39,7 @@ export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    userService
+    UserService
       .createUser({
         username: String(data.get("username")),
         password: String(data.get("password")),

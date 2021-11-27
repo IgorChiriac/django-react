@@ -3,6 +3,8 @@ export const SESSION_AUTH_NAME = "authToken";
 
 export interface IRestaurantService {
   getRestaurants: (page: number) => Promise<any>;
+  getRestaurantsByPage: (page: number) => Promise<any>;
+  getRestaurantsList: () => Promise<any>;
   getRestaurantDetail: (restaurantId: string) => Promise<any>;
   getRestaurantReviews: (restaurantId: string) => Promise<any>;
   createReview: (
@@ -15,9 +17,17 @@ export interface IRestaurantService {
   ) => Promise<any>;
 }
 
-const userService: IRestaurantService = {
+const RestaurantService: IRestaurantService = {
   getRestaurants(page): Promise<any> {
     return axios.get(`/api/v1/restaurants/?ordering=-reviews_avg&page=${page}`);
+  },
+
+  getRestaurantsList(): Promise<any> {
+    return axios.get(`/api/v1/restaurants/`);
+  },
+
+  getRestaurantsByPage(page: number): Promise<any> {
+    return axios.get(`/api/v1/restaurants/?page=${page}`);
   },
 
   getRestaurantDetail(restaurantId): Promise<any> {
@@ -36,4 +46,4 @@ const userService: IRestaurantService = {
   },
 };
 
-export default userService;
+export default RestaurantService;

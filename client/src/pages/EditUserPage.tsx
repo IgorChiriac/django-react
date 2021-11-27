@@ -7,7 +7,7 @@ import Container from "@mui/material/Container";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import userService, { IUser } from "../services/userService";
+import UserService, { IUser } from "../services/userService";
 import { useHistory, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 
@@ -26,7 +26,7 @@ export default function EditUserPage() {
   });
 
   useEffect(() => {
-    userService
+    UserService
       .getUserById(userId)
       .then((res: { data: IUser }) => {
         setCurrentUser(res.data);
@@ -35,13 +35,13 @@ export default function EditUserPage() {
   }, [userId]);
 
   const onDeleteUser = () => {
-    userService.deleteUserById(userId).then(() => {
+    UserService.deleteUserById(userId).then(() => {
       history.push("/users");
     });
   };
 
   const onUpdateUser = (data: any) => {
-    userService.updateUser(data);
+    UserService.updateUser(data);
   };
 
   const formik = useFormik({

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import userService, { IUser } from "../services/userService";
+import UserService, { IUser } from "../services/userService";
 import AuthenticationService from "../services/authentification";
 
 const AuthContext = React.createContext({} as any);
@@ -15,7 +15,7 @@ function AuthProviderWrapper(props: any) {
   });
 
   const loadCurrentUser = () => {
-    userService
+    UserService
       .getCurrentUser()
       .then((response) => {
         setAppState({ isLoggedIn: true, user: response.data });
@@ -52,6 +52,7 @@ function AuthProviderWrapper(props: any) {
       value={{
         isLoggedIn: appState.isLoggedIn,
         currentUser: appState.user,
+        isAdmin: appState.user?.is_admin,
         logOutUser,
         setLoggedUser,
         logInUser,

@@ -33,6 +33,18 @@ const ApplicationBar = () => {
     logOutUser();
   };
 
+  const menuItems = [
+    <MenuItem key={"users"} component={RouterLink} to={"/users"}>
+    <Typography textAlign="center">Users</Typography>
+  </MenuItem>,
+  <MenuItem key={"restaurants"} component={RouterLink} to={"/restaurants"}>
+    <Typography textAlign="center">Restaurants</Typography>
+  </MenuItem>,
+  <MenuItem key={"reviews"} component={RouterLink} to={"/reviews"}>
+    <Typography textAlign="center">Reviews</Typography>
+  </MenuItem>
+  ]
+
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#3e3750" }}>
       <Container maxWidth="xl">
@@ -92,11 +104,7 @@ const ApplicationBar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {currentUser.is_admin && (
-                  <MenuItem key={"users"} component={RouterLink} to={"/users"}>
-                    <Typography textAlign="center">Users</Typography>
-                  </MenuItem>
-                )}
+                {currentUser.is_admin && menuItems}
                 <MenuItem key={"logout"} onClick={() => onLogoutClick()}>
                   <Typography textAlign="center">Log out</Typography>
                 </MenuItem>
@@ -107,7 +115,7 @@ const ApplicationBar = () => {
               <MenuItem key={"login"} component={RouterLink} to={"/login"}>
                 <Typography textAlign="center">Login</Typography>
               </MenuItem>
-              <MenuItem key={"login"} component={RouterLink} to={"/signup"}>
+              <MenuItem key={"signup"} component={RouterLink} to={"/signup"}>
                 <Typography textAlign="center">Sign Up</Typography>
               </MenuItem>
             </>
