@@ -5,16 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthProviderWrapper } from "./context/AuthContext";
 import AuthenticationService from "./services/authentification";
-import DateAdapter from '@mui/lab/AdapterDayjs';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateAdapter from "@mui/lab/AdapterDayjs";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import dayjs from "dayjs";
-import relativeTime from 'dayjs/plugin/relativeTime'
-import axios from 'axios'
+import relativeTime from "dayjs/plugin/relativeTime";
+import axios from "axios";
 
-axios.defaults.xsrfCookieName = 'csrftoken'
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
-dayjs.extend(relativeTime)
+dayjs.extend(relativeTime);
 
 if (AuthenticationService.isUserLoggedIn()) {
   AuthenticationService.setupAxiosInterceptors();

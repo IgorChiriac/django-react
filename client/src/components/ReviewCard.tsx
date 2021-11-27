@@ -8,7 +8,7 @@ import {
   Rating,
   Box,
 } from "@mui/material";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 
 interface Props {
   review: any;

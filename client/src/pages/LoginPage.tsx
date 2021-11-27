@@ -82,7 +82,7 @@ export default function LoginPage() {
             flexDirection: "column",
             alignItems: "center",
           }}
-          >
+        >
           {loginState.loading && <LoadingIndicator />}
           {loginState.error && (
             <Alert severity="error">{loginState.error}</Alert>

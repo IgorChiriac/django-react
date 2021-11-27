@@ -1,4 +1,14 @@
-import { Card, CardMedia, CardContent, Typography, CardActions, Button, Rating, Box, TextField } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  Rating,
+  Box,
+  TextField,
+} from "@mui/material";
 import { useState } from "react";
 import RestaurantsService from "../services/restaurantsService";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
@@ -19,7 +29,9 @@ const NewReview = (props: Props) => {
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      RestaurantsService.createReview(props.restaurantId, values).then(props.refresh);
+      RestaurantsService.createReview(props.restaurantId, values).then(
+        props.refresh
+      );
     },
   });
 
@@ -46,13 +58,19 @@ const NewReview = (props: Props) => {
           formik.setFieldValue("num_stars", num_stars);
         }}
       />
-      <Box component="div" sx={{ mt: 4, display: "flex", justifyContent: "flex-start" }}>
+      <Box
+        component="div"
+        sx={{ mt: 4, display: "flex", justifyContent: "flex-start" }}
+      >
         <MobileDatePicker
           label="Date of Visit"
           inputFormat="YYYY-MM-DD"
           value={formik.values.visit_date}
           onChange={(newValue: Date | null) => {
-            formik.setFieldValue("visit_date", dayjs(newValue).format("YYYY-MM-DD"));
+            formik.setFieldValue(
+              "visit_date",
+              dayjs(newValue).format("YYYY-MM-DD")
+            );
           }}
           renderInput={(params) => <TextField {...params} />}
         />

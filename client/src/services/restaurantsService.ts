@@ -7,7 +7,11 @@ export interface IRestaurantService {
   getRestaurantReviews: (restaurantId: string) => Promise<any>;
   createReview: (
     restaurantId: string,
-    { num_stars, comment, visit_date }: { comment: string; num_stars: number; visit_date: string }
+    {
+      num_stars,
+      comment,
+      visit_date,
+    }: { comment: string; num_stars: number; visit_date: string }
   ) => Promise<any>;
 }
 
