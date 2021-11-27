@@ -46,17 +46,16 @@ const RestaurantDetail = () => {
             <Grid
               container
               spacing={2}
-              xs={12}
               marginTop={2}
               marginBottom={3}
               alignItems="center"
               justifyContent="center"
             >
               {reviews &&
-                reviews.length &&
-                reviews.map((review) => (
-                  <Grid item xs={12} sm={4} md={3}>
-                    <ReviewCard review={review} />
+                reviews.length > 0 &&
+                reviews.map((review: any) => (
+                  <Grid item xs={12} sm={4} md={3} key={review.id}>
+                    <ReviewCard  review={review} />
                   </Grid>
                 ))}
             </Grid>

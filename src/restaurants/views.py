@@ -1,8 +1,7 @@
 from .models import Restaurant, Review
 from .serializers import RestaurantSerializer, ReviewSerializer, RestaurantWithReviewsSerializer
-from rest_framework import generics
+from rest_framework import generics, filters, permissions
 from django.db.models import Avg, Count
-from rest_framework import filters
 from src.restaurants.permissions import AdminOnly
 
 
@@ -40,10 +39,10 @@ class RestaurantDetail(generics.UpdateAPIView, generics.DestroyAPIView):
             reviews_avg=Avg('reviews__num_stars')
         )
 
-class ReviewList(generics.ListCreateAPIView):
+class ReviewList(generics.CreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [AdminOnly]
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

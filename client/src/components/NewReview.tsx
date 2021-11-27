@@ -1,26 +1,25 @@
 import {
-  Card,
-  CardMedia,
-  CardContent,
   Typography,
-  CardActions,
   Button,
   Rating,
   Box,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import {useState} from 'react'
 import RestaurantsService from "../services/restaurantsService";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import { useFormik } from "formik";
 import dayjs from "dayjs";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface Props {
   restaurantId: string;
   refresh: () => void;
 }
 
+
 const NewReview = (props: Props) => {
+  const [isLoading, setIsLoading] = useState(false)
   const formik = useFormik({
     initialValues: {
       comment: "",
@@ -28,10 +27,13 @@ const NewReview = (props: Props) => {
       visit_date: dayjs().format("YYYY-MM-DD"),
     },
     enableReinitialize: true,
-    onSubmit: (values) => {
-      RestaurantsService.createReview(props.restaurantId, values).then(
-        props.refresh
-      );
+    onSubmit: (values, {resetForm}) => {
+      setIsLoading(true)
+      RestaurantsService.createReview(props.restaurantId, values).then(()=>{
+        resetForm({})
+        setIsLoading(false)
+        props.refresh()
+      });
     },
   });
 
@@ -45,8 +47,12 @@ const NewReview = (props: Props) => {
         border: "1px solid black",
         padding: "2rem",
         backgroundColor: "#fdfdfd",
+        position: "relative"
       }}
     >
+      {isLoading && <Box component="div" sx={{ position: "absolute", width: '100%'}}>
+      <CircularProgress />
+    </Box>}
       <Typography gutterBottom variant="h6" component="div">
         Leave your review
       </Typography>
