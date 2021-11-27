@@ -12,10 +12,9 @@ import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 
 const Home = () => {
-  const [restaurants, setRestaurants] = useState([] as any[]);
+  const [restaurants, setRestaurants] = useState<any>([]);
   const theme = createTheme();
   const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(30);
 
   useEffect(() => {
     getRestaurantsPage(page);
@@ -24,7 +23,6 @@ const Home = () => {
   const getRestaurantsPage = (page: number) => {
     RestaurantsService.getRestaurants(page).then((res) => {
       setRestaurants(res.data.results);
-      setTotal(res.data.count);
     });
   };
 
@@ -64,15 +62,14 @@ const Home = () => {
             <div>
               <Grid
                 container
-                xs={12}
                 spacing={2}
                 marginTop={2}
                 display="flex"
                 alignContent="center"
                 justifyItems="center"
               >
-                {restaurants.map((restaurant) => (
-                  <Grid item xs={12} sm={4} md={3}>
+                {restaurants.map((restaurant: any) => (
+                  <Grid key={restaurant.id} item xs={12} sm={4} md={3}>
                     <RestaurantCard restaurant={restaurant} />
                   </Grid>
                 ))}
@@ -85,7 +82,7 @@ const Home = () => {
                 }}
               >
                 <Pagination
-                  count={total / 10}
+                  count={restaurants.count}
                   color="secondary"
                   onChange={(e, newValue) => {
                     console.log(e, setPage(newValue));
