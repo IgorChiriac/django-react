@@ -20,7 +20,7 @@ import RestaurantService from "../services/restaurantsService";
 import ApplicationBar from "../components/ApplicationBar";
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 
 interface TablePaginationActionsProps {
@@ -146,11 +146,18 @@ export default function RestaurantsPage() {
                     <TableCell component="th" scope="row">
                       {restaurant.name}
                     </TableCell>
-                    <TableCell align="right">{restaurant.cuisine_type}</TableCell>
-                    <TableCell align="right">{dayjs(restaurant.created_at).format('DD/MM/YYYY')}</TableCell>
+                    <TableCell align="right">
+                      {restaurant.cuisine_type}
+                    </TableCell>
+                    <TableCell align="right">
+                      {dayjs(restaurant.created_at).format("DD/MM/YYYY")}
+                    </TableCell>
                     <TableCell align="right">
                       <div>
-                        <Link component={RouterLink} to={`/restaurants/${restaurant.id}/`}>
+                        <Link
+                          component={RouterLink}
+                          to={`/restaurants/${restaurant.id}/`}
+                        >
                           Edit
                         </Link>
                       </div>

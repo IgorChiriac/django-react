@@ -39,11 +39,10 @@ export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    UserService
-      .createUser({
-        username: String(data.get("username")),
-        password: String(data.get("password")),
-      })
+    UserService.createUser({
+      username: String(data.get("username")),
+      password: String(data.get("password")),
+    })
       .then((res) => {
         const { tokens, ...user } = res.data;
         setLoggedUser(user, tokens.access);

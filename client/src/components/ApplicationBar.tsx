@@ -35,15 +35,15 @@ const ApplicationBar = () => {
 
   const menuItems = [
     <MenuItem key={"users"} component={RouterLink} to={"/users"}>
-    <Typography textAlign="center">Users</Typography>
-  </MenuItem>,
-  <MenuItem key={"restaurants"} component={RouterLink} to={"/restaurants"}>
-    <Typography textAlign="center">Restaurants</Typography>
-  </MenuItem>,
-  <MenuItem key={"reviews"} component={RouterLink} to={"/reviews"}>
-    <Typography textAlign="center">Reviews</Typography>
-  </MenuItem>
-  ]
+      <Typography textAlign="center">Users</Typography>
+    </MenuItem>,
+    <MenuItem key={"restaurants"} component={RouterLink} to={"/restaurants"}>
+      <Typography textAlign="center">Restaurants</Typography>
+    </MenuItem>,
+    <MenuItem key={"reviews"} component={RouterLink} to={"/reviews"}>
+      <Typography textAlign="center">Reviews</Typography>
+    </MenuItem>,
+  ];
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#3e3750" }}>

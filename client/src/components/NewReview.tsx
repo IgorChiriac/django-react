@@ -1,25 +1,19 @@
-import {
-  Typography,
-  Button,
-  Rating,
-  Box,
-  TextField,
-} from "@mui/material";
-import {useState} from 'react'
+import { Typography, Button, Rating, Box, TextField } from "@mui/material";
+import { useState } from "react";
 import RestaurantsService from "../services/restaurantsService";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import { useFormik } from "formik";
 import dayjs from "dayjs";
 import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 
 interface Props {
   restaurantId: string;
   refresh: () => void;
 }
 
-
 const NewReview = (props: Props) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [formState, setFormState] = useState({ isLoading: false, error: null });
   const formik = useFormik({
     initialValues: {
       comment: "",
@@ -27,13 +21,22 @@ const NewReview = (props: Props) => {
       visit_date: dayjs().format("YYYY-MM-DD"),
     },
     enableReinitialize: true,
-    onSubmit: (values, {resetForm}) => {
-      setIsLoading(true)
-      RestaurantsService.createReview(props.restaurantId, values).then(()=>{
-        resetForm({})
-        setIsLoading(false)
-        props.refresh()
-      });
+    onSubmit: (values, { resetForm }) => {
+      setFormState({ isLoading: true, error: null });
+      RestaurantsService.createReview(props.restaurantId, values)
+        .then(() => {
+          resetForm({});
+          setFormState({ isLoading: false, error: null });
+          props.refresh();
+        })
+        .catch((error) => {
+          if (error.response) {
+            setFormState({
+              isLoading: false,
+              error: error.response,
+            });
+          }
+        });
     },
   });
 
@@ -47,12 +50,17 @@ const NewReview = (props: Props) => {
         border: "1px solid black",
         padding: "2rem",
         backgroundColor: "#fdfdfd",
-        position: "relative"
+        position: "relative",
       }}
     >
-      {isLoading && <Box component="div" sx={{ position: "absolute", width: '100%'}}>
-      <CircularProgress />
-    </Box>}
+      {formState.isLoading && (
+        <Box component="div" sx={{ position: "absolute", width: "100%" }}>
+          <CircularProgress />
+        </Box>
+      )}
+      {formState.error && (
+        <Alert severity="error">An error occurred saving the review.</Alert>
+      )}
       <Typography gutterBottom variant="h6" component="div">
         Leave your review
       </Typography>
@@ -72,6 +80,7 @@ const NewReview = (props: Props) => {
           label="Date of Visit"
           inputFormat="YYYY-MM-DD"
           value={formik.values.visit_date}
+          disableFuture={true}
           onChange={(newValue: Date | null) => {
             formik.setFieldValue(
               "visit_date",
@@ -84,6 +93,7 @@ const NewReview = (props: Props) => {
       <TextField
         multiline
         rows={4}
+        required
         value={formik.values.comment}
         onChange={formik.handleChange}
         size="small"
@@ -95,6 +105,7 @@ const NewReview = (props: Props) => {
       <Button
         variant="text"
         type="submit"
+        disabled={formState.isLoading}
         sx={{
           mt: 3,
           mb: 2,

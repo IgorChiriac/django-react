@@ -15,8 +15,7 @@ function AuthProviderWrapper(props: any) {
   });
 
   const loadCurrentUser = () => {
-    UserService
-      .getCurrentUser()
+    UserService.getCurrentUser()
       .then((response) => {
         setAppState({ isLoggedIn: true, user: response.data });
       })

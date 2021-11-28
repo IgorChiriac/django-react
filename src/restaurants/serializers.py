@@ -7,6 +7,7 @@ class ReviewSerializer(serializers.ModelSerializer):
   class Meta:
     model = Review
     fields = '__all__'
+    extra_kwargs = {'num_stars': {'required': True}} 
 
 class RestaurantSerializer(serializers.ModelSerializer):
   reviews_count = serializers.IntegerField(read_only = True)

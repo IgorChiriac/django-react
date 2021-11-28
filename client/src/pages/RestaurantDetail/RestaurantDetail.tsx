@@ -14,13 +14,12 @@ const RestaurantDetail = () => {
   const params: any = useParams();
   const [restaurant, setRestaurant] = useState<any>(null);
 
-  
   const getRestaurantDetail = () => {
     RestaurantsService.getRestaurantDetail(params.id).then((res) => {
       setRestaurant(res.data);
     });
   };
-  
+
   useEffect(() => {
     RestaurantsService.getRestaurantDetail(params.id).then((res) => {
       setRestaurant(res.data);
@@ -54,9 +53,9 @@ const RestaurantDetail = () => {
             >
               {restaurant &&
                 restaurant.reviews_summary.length > 0 &&
-                restaurant.reviews_summary.map((review: any) => (
-                  <Grid item xs={12} sm={4} md={3} key={review.id}>
-                    <ReviewCard  review={review} />
+                restaurant.reviews_summary.map((review: any, index: number) => (
+                  <Grid item xs={12} sm={4} md={3} key={index}>
+                    <ReviewCard review={review} />
                   </Grid>
                 ))}
             </Grid>

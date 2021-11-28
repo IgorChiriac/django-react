@@ -26,8 +26,7 @@ export default function EditUserPage() {
   });
 
   useEffect(() => {
-    UserService
-      .getUserById(userId)
+    UserService.getUserById(userId)
       .then((res: { data: IUser }) => {
         setCurrentUser(res.data);
       })
