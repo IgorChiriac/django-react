@@ -12,21 +12,18 @@ import NewReview from "../../components/NewReview";
 
 const RestaurantDetail = () => {
   const params: any = useParams();
-  const [restaurant, setRestaurant] = useState(null);
-  const [reviews, setReviews] = useState([]);
+  const [restaurant, setRestaurant] = useState<any>(null);
 
   
   const getRestaurantDetail = () => {
     RestaurantsService.getRestaurantDetail(params.id).then((res) => {
       setRestaurant(res.data);
-      setReviews(res.data.reviews_summary);
     });
   };
   
   useEffect(() => {
     RestaurantsService.getRestaurantDetail(params.id).then((res) => {
       setRestaurant(res.data);
-      setReviews(res.data.reviews_summary);
     });
   }, [params.id]);
 
@@ -55,9 +52,9 @@ const RestaurantDetail = () => {
               alignItems="center"
               justifyContent="center"
             >
-              {reviews &&
-                reviews.length > 0 &&
-                reviews.map((review: any) => (
+              {restaurant &&
+                restaurant.reviews_summary.length > 0 &&
+                restaurant.reviews_summary.map((review: any) => (
                   <Grid item xs={12} sm={4} md={3} key={review.id}>
                     <ReviewCard  review={review} />
                   </Grid>
