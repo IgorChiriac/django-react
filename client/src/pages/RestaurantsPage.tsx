@@ -22,6 +22,7 @@ import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
+import { useHistory } from "react-router-dom";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -106,6 +107,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 export default function RestaurantsPage() {
   const [restaurants, setRestaurants] = useState<any | null>(null);
   const [page, setPage] = React.useState(0);
+  const history = useHistory();
   useEffect(() => {
     RestaurantService.getRestaurantsList().then((response) => {
       setRestaurants(response.data);
@@ -126,6 +128,21 @@ export default function RestaurantsPage() {
     <>
       <ApplicationBar />
       <Container sx={{ mt: 8 }}>
+        <Box
+          sx={{
+            marginBottom: 4,
+            display: "flex",
+            justifyContent: "right",
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={() => history.push("/restaurants/new")}
+          >
+            Create Restaurant
+          </Button>
+        </Box>
+
         {restaurants && (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">

@@ -40,9 +40,6 @@ const ApplicationBar = () => {
     <MenuItem key={"restaurants"} component={RouterLink} to={"/restaurants"}>
       <Typography textAlign="center">Restaurants</Typography>
     </MenuItem>,
-    <MenuItem key={"reviews"} component={RouterLink} to={"/reviews"}>
-      <Typography textAlign="center">Reviews</Typography>
-    </MenuItem>,
   ];
 
   return (

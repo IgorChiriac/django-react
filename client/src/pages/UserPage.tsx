@@ -21,6 +21,7 @@ import ApplicationBar from "../components/ApplicationBar";
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { useHistory } from "react-router-dom";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -105,6 +106,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 export default function UserPage() {
   const [users, setUsers] = useState<any | null>(null);
   const [page, setPage] = React.useState(0);
+  const history = useHistory();
   useEffect(() => {
     UserService.getUserList(page).then((response) => {
       setUsers(response.data);
@@ -125,6 +127,20 @@ export default function UserPage() {
     <>
       <ApplicationBar />
       <Container sx={{ mt: 8 }}>
+        <Box
+          sx={{
+            marginBottom: 4,
+            display: "flex",
+            justifyContent: "right",
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={() => history.push("/users/new")}
+          >
+            Create User
+          </Button>
+        </Box>
         {users && (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">

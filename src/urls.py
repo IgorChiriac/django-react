@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     url(r'^health/', include('health_check.urls')),
     # the 'index.html' default template as default router
-    re_path('(^(?!(api|admin)).*$)',TemplateView.as_view(template_name="index.html")),
+    re_path('(^(?!(api|admin|media)).*$)',TemplateView.as_view(template_name="index.html")),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -85,7 +85,7 @@ const Home = () => {
                   count={restaurants.count}
                   color="secondary"
                   onChange={(e, newValue) => {
-                    console.log(e, setPage(newValue));
+                    setPage(newValue);
                   }}
                 />
               </div>

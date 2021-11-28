@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -7,46 +6,39 @@ import Container from "@mui/material/Container";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import UserService, { IUser } from "../services/userService";
-import { useHistory, useParams } from "react-router-dom";
+import UserService from "../services/userService";
+import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
+import { useState } from "react";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const theme = createTheme();
 const label = { inputProps: { "aria-label": "Admin User" } };
 
-export default function EditUserPage() {
-  const { id: userId }: any = useParams();
+export default function NewUserPage() {
   const history = useHistory();
-  const [currentUser, setCurrentUser] = useState({
-    username: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    is_admin: false,
-  });
-
-  useEffect(() => {
-    UserService.getUserById(userId)
-      .then((res: { data: IUser }) => {
-        setCurrentUser(res.data);
-      })
-      .catch((error) => {});
-  }, [userId]);
-
-  const onDeleteUser = () => {
-    UserService.deleteUserById(userId).then(() => {
-      history.push("/users");
-    });
-  };
+  const [formState, setFormState] = useState({ loading: false, error: null });
 
   const onUpdateUser = (data: any) => {
-    UserService.updateUser(data).then((res: { data: IUser }) => {
-      history.push("/users");
-    });
+    UserService.createUser(data)
+      .then(() => {
+        history.push("/users");
+      })
+      .catch((e) => {
+        setFormState({ loading: false, error: e });
+      });
   };
 
   const formik = useFormik({
-    initialValues: currentUser,
+    initialValues: {
+      username: "",
+      password: "",
+      first_name: "",
+      last_name: "",
+      email: "",
+      is_admin: false,
+    },
     enableReinitialize: true,
     onSubmit: (values) => {
       onUpdateUser(values);
@@ -61,6 +53,12 @@ export default function EditUserPage() {
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        {formState.loading && (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress />
+          </Box>
+        )}
+        {formState.error && <Alert severity="error">An error occured.</Alert>}
         <Box
           sx={{
             marginTop: 8,
@@ -80,6 +78,18 @@ export default function EditUserPage() {
               autoComplete="username"
               autoFocus
               value={formik.values.username}
+              onChange={formik.handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="password"
+              label="Password"
+              name="password"
+              autoComplete="password"
+              type="password"
+              value={formik.values.password}
               onChange={formik.handleChange}
             />
             <TextField
@@ -129,18 +139,10 @@ export default function EditUserPage() {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={formState.loading}
               sx={{ mt: 3, mb: 2 }}
             >
-              Update
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              color="error"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={() => onDeleteUser()}
-            >
-              Delete User
+              Create
             </Button>
           </Box>
         </Box>

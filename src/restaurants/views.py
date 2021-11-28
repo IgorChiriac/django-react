@@ -28,7 +28,7 @@ class RestaurantWithReviewsDetail(generics.RetrieveAPIView):
             reviews_avg=Avg('reviews__num_stars')
         )
 
-class RestaurantDetail(generics.UpdateAPIView, generics.DestroyAPIView):
+class RestaurantDetail(generics.RetrieveAPIView, generics.UpdateAPIView, generics.DestroyAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     permission_classes = [AdminOnly]

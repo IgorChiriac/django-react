@@ -11,7 +11,10 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import RestaurantDetail from "./pages/RestaurantDetail/RestaurantDetail";
 import EditUserPage from "./pages/EditUserPage";
+import NewUserPage from "./pages/NewUserPage";
 import RestaurantsPage from "./pages/RestaurantsPage";
+import NewRestaurantPage from "./pages/NewRestaurantPage";
+import EditRestaurantPage from "./pages/EditRestaurantPage";
 
 function App() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -35,11 +38,20 @@ function App() {
           <PrivateRoute exact path="/users" isAuthenticated={isLoggedIn}>
             <UserPage />
           </PrivateRoute>
-          <PrivateRoute path="/users/:id" isAuthenticated={isLoggedIn}>
+          <PrivateRoute exact path="/users/new" isAuthenticated={isLoggedIn}>
+            <NewUserPage />
+          </PrivateRoute>
+          <PrivateRoute exact path="/users/:id" isAuthenticated={isLoggedIn}>
             <EditUserPage />
           </PrivateRoute>
           <PrivateRoute exact path="/restaurants" isAuthenticated={isLoggedIn}>
             <RestaurantsPage />
+          </PrivateRoute>
+          <PrivateRoute path="/restaurants/new" isAuthenticated={isLoggedIn}>
+            <NewRestaurantPage />
+          </PrivateRoute>
+          <PrivateRoute path="/restaurants/:id" isAuthenticated={isLoggedIn}>
+            <EditRestaurantPage />
           </PrivateRoute>
           <Route path="*">
             <NotFound />
