@@ -1,5 +1,4 @@
 import axios from "axios";
-export const SESSION_AUTH_NAME = "authToken";
 
 export interface IRestaurantService {
   getRestaurants: (page: number) => Promise<any>;
@@ -10,7 +9,6 @@ export interface IRestaurantService {
   deleteRestaurantById: (id: string) => Promise<any>;
   getRestaurantsList: () => Promise<any>;
   getRestaurantDetail: (restaurantId: string) => Promise<any>;
-  getRestaurantReviews: (restaurantId: string) => Promise<any>;
   createReview: (
     restaurantId: string,
     {
@@ -52,13 +50,10 @@ const RestaurantService: IRestaurantService = {
   },
 
   getRestaurantDetail(restaurantId): Promise<any> {
-    return axios.get(`/api/v1/restaurants/${restaurantId}/details`);
-  },
-  getRestaurantReviews(restaurantId): Promise<any> {
-    return axios.get(`/api/v1/restaurants/${restaurantId}/reviews`);
+    return axios.get(`/api/v1/restaurants/${restaurantId}/details/`);
   },
   createReview(restaurantId, { num_stars, comment, visit_date }): Promise<any> {
-    return axios.post(`/api/v1/restaurants/${restaurantId}/reviews`, {
+    return axios.post(`/api/v1/reviews/`, {
       comment: comment,
       num_stars: num_stars,
       visit_date: visit_date,

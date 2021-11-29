@@ -16,10 +16,9 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import UserService, { IUser } from "../services/userService";
+import ReviewService from "../services/reviewService";
 import ApplicationBar from "../components/ApplicationBar";
-import { Link } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import dayjs from 'dayjs'
 import Button from "@mui/material/Button";
 
 interface TablePaginationActionsProps {
@@ -102,59 +101,65 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export default function UserPage() {
-  const [users, setUsers] = useState<any | null>(null);
+export default function ReviewsPage() {
+  const [reviews, setReviews] = useState<any | null>(null);
   const [page, setPage] = React.useState(0);
   useEffect(() => {
-    UserService.getUserList(page).then((response) => {
-      setUsers(response.data);
+    ReviewService.getReviewsList().then((response: any) => {
+      setReviews(response.data);
     });
-  }, [page]);
+  }, []);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
-    UserService.getUserList(newPage).then((response) => {
-      setUsers(response.data);
+    ReviewService.getReviewsByPage(newPage + 1).then((response: any) => {
+      setReviews(response.data);
     });
   };
+
+  const handleDeleteReview = (id: any)=>{
+    ReviewService.deleteReview(id).then(()=>{
+      ReviewService.getReviewsList().then((response: any) => {
+        setReviews(response.data);
+      });
+    })
+  }
 
   return (
     <>
       <ApplicationBar />
       <Container sx={{ mt: 8 }}>
-        {users && (
+        {reviews && (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Username</TableCell>
-                  <TableCell align="right">First Name</TableCell>
-                  <TableCell align="right">Last Name</TableCell>
-                  <TableCell align="right">Is Admin</TableCell>
+                  <TableCell>Author</TableCell>
+                  <TableCell align="right">Restaurant Name</TableCell>
+                  <TableCell align="right">Comment</TableCell>
+                  <TableCell align="right">Stars</TableCell>
+                  <TableCell align="right">Visit Date</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.results.map((user: IUser, index: number) => (
+                {reviews.results.map((review: any, index: number) => (
                   <TableRow
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {user.username}
+                      {review.author}
                     </TableCell>
-                    <TableCell align="right">{user.first_name}</TableCell>
-                    <TableCell align="right">{user.last_name}</TableCell>
-                    <TableCell align="right">{user.is_admin}</TableCell>
+                    <TableCell align="right">{review.restaurant_name}</TableCell>
+                    <TableCell align="right">{review.comment}</TableCell>
+                    <TableCell align="right">{review.num_stars}</TableCell>
+                    <TableCell align="right">{dayjs(review.visit_date).format('DD/MM/YYYY')}</TableCell>
                     <TableCell align="right">
-                      <div>
-                        <Link component={RouterLink} to={`/users/${user.id}/`}>
-                          Edit
-                        </Link>
-                      </div>
+                      <Button onClick={()=>handleDeleteReview(review.id)}>Delete</Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -163,7 +168,7 @@ export default function UserPage() {
                 <TableRow>
                   <TablePagination
                     colSpan={3}
-                    count={users.count}
+                    count={reviews.count}
                     rowsPerPage={10}
                     page={page}
                     SelectProps={{

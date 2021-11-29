@@ -15,6 +15,7 @@ import NewUserPage from "./pages/NewUserPage";
 import RestaurantsPage from "./pages/RestaurantsPage";
 import NewRestaurantPage from "./pages/NewRestaurantPage";
 import EditRestaurantPage from "./pages/EditRestaurantPage";
+import ReviewsPage from "./pages/ReviewsPage";
 
 function App() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -52,6 +53,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path="/restaurants/:id" isAuthenticated={isLoggedIn}>
             <EditRestaurantPage />
+          </PrivateRoute>
+          <PrivateRoute path="/reviews" isAuthenticated={isLoggedIn}>
+            <ReviewsPage />
           </PrivateRoute>
           <Route path="*">
             <NotFound />

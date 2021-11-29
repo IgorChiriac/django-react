@@ -39,7 +39,15 @@ class RestaurantDetail(generics.RetrieveAPIView, generics.UpdateAPIView, generic
             reviews_avg=Avg('reviews__num_stars')
         )
 
-class ReviewList(generics.CreateAPIView):
+class ReviewList(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+class ReviewDetail(generics.RetrieveAPIView, generics.UpdateAPIView, generics.DestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = [permissions.IsAuthenticated]

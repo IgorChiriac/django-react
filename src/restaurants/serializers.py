@@ -4,6 +4,7 @@ from src.restaurants.models import Restaurant, Review
 
 class ReviewSerializer(serializers.ModelSerializer):
   author = serializers.ReadOnlyField(source='author.username')
+  restaurant_name = serializers.ReadOnlyField(source='restaurant.name', read_only=True)
   class Meta:
     model = Review
     fields = '__all__'
