@@ -52,10 +52,11 @@ export default function EditRestaurantPage() {
     onSubmit: (values) => {
       setFormState({ ...formState, loading: true, error: null });
       let formData = new FormData();
+      formData.append("id", restaurantId);
       formData.append("name", formik.values.name);
       formData.append("cuisine_type", formik.values.cuisine_type);
       formData.append("restaurant_photo", formik.values.restaurant_photo);
-      RestaurantService.updateRestaurant(values)
+      RestaurantService.updateRestaurant(restaurantId, formData)
         .then(() => {
           history.push("/restaurants");
         })
@@ -91,7 +92,7 @@ export default function EditRestaurantPage() {
           {formState.loading && <LoadingIndicator />}
           {formState.error && <Alert severity="error">An error occurred.</Alert>}
           <Typography component="h1" variant="h5">
-            New Restaurant
+            Update Restaurant
           </Typography>
           <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
             <TextField

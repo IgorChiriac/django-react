@@ -4,7 +4,7 @@ export interface IRestaurantService {
   getRestaurants: (page: number) => Promise<any>;
   getRestaurantsByPage: (page: number) => Promise<any>;
   createRestaurant: (data: any) => Promise<any>;
-  updateRestaurant: (data: any) => Promise<any>;
+  updateRestaurant: (id:string, data: any) => Promise<any>;
   getRestaurantsById: (id: string) => Promise<any>;
   deleteRestaurantById: (id: string) => Promise<any>;
   getRestaurantsList: () => Promise<any>;
@@ -28,9 +28,8 @@ const RestaurantService: IRestaurantService = {
     return axios.post("/api/v1/restaurants/", data);
   },
 
-  updateRestaurant(data: any): Promise<any> {
-    const { id, ...restaurant } = data;
-    return axios.patch(`/api/v1/restaurants/${id}/`, restaurant);
+  updateRestaurant(id: string, data: any): Promise<any> {
+    return axios.patch(`/api/v1/restaurants/${id}/`, data);
   },
 
   getRestaurantsList(): Promise<any> {
