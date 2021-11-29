@@ -42,6 +42,9 @@ export default function SignIn() {
     UserService.createUser({
       username: String(data.get("username")),
       password: String(data.get("password")),
+      first_name: String(data.get("first_name")),
+      last_name: String(data.get("last_name")),
+      email: String(data.get("email")),
     })
       .then((res) => {
         const { tokens, ...user } = res.data;
@@ -113,7 +116,7 @@ export default function SignIn() {
               type="email"
               id="email"
               label="Email"
-              name="Email"
+              name="email"
               autoComplete="email"
             />
 
