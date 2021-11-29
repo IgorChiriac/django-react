@@ -22,6 +22,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'jet',
     'django.contrib.admin',
@@ -36,6 +37,7 @@ INSTALLED_APPS = (
     'health_check.db',  # stock Django health checkers
     'health_check.storage',
     'health_check.contrib.migrations',
+    'cloudinary'
     # Your apps
     'src.users',
     'src.files',
@@ -274,3 +276,10 @@ django_heroku.settings(locals())
 
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
