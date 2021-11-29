@@ -89,7 +89,7 @@ export default function EditRestaurantPage() {
           }}
         >
           {formState.loading && <LoadingIndicator />}
-          {formState.error && <Alert severity="error">{formState.error}</Alert>}
+          {formState.error && <Alert severity="error">An error occurred.</Alert>}
           <Typography component="h1" variant="h5">
             New Restaurant
           </Typography>

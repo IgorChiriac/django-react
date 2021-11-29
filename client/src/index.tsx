@@ -9,10 +9,6 @@ import DateAdapter from "@mui/lab/AdapterDayjs";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import axios from "axios";
-
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
 dayjs.extend(relativeTime);
 

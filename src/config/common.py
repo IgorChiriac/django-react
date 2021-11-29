@@ -1,7 +1,6 @@
 import os
 import sys
 import dotenv
-from pathlib import Path
 from datetime import timedelta
 from os.path import join
 
@@ -22,8 +21,9 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'jet',
     'django.contrib.admin',
     # Third party apps
@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'health_check.db',  # stock Django health checkers
     'health_check.storage',
     'health_check.contrib.migrations',
-    'cloudinary'
     # Your apps
     'src.users',
     'src.files',

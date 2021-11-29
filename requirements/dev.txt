@@ -12,5 +12,5 @@ django-nose==1.4.7
 nose-progressive==1.5.2
 coverage==5.5
 
-cloudinary==1.17.0
-django-cloudinary-storage==0.2.3
+cloudinary==1.28.0
+django-cloudinary-storage==0.3.0
