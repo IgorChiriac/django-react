@@ -56,7 +56,11 @@ MIDDLEWARE = (
 )
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', '#p7&kxb7y^yq8ahfw5%$xh=f8=&1y*5+a5($8w_f7kw!-qig(j')
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "https://rate-the-taste.herokuapp.com",
+    "localhost",
+    "127.0.0.1"
+]
 ROOT_URLCONF = 'src.urls'
 WSGI_APPLICATION = 'src.wsgi.application'
 
@@ -69,7 +73,10 @@ EMAIL_FROM = os.getenv('EMAIL_FROM', 'noreply@somehost.local')
 ADMINS = ()
 
 # CORS
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 # Postgres
 DATABASES = {
