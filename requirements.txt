@@ -27,6 +27,9 @@ django-rest-swagger==2.2.0
 easy-thumbnails==2.7.1
 django-auto-prefetching==0.1.10
 
+# Testing
+django-nose==1.4.7
+
 # Developer Tools
 ipython==7.24.0
 sentry-sdk==1.1.0
