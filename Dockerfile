@@ -18,6 +18,7 @@ CMD ["sh", "/entrypoint-web.sh"]
 COPY ./docker/ /
 
 COPY ./requirements/ ./requirements
+COPY ./requirements.txt ./requirements
 RUN pip install -r ./requirements/${REQUIREMENTS_FILE}
 
 COPY . ./

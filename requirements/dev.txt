@@ -1,4 +1,4 @@
--r prod.txt
+-r requirements.txt
 
 # Developer Tools
 ipdb==0.13.8
