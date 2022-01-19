@@ -1,4 +1,4 @@
-# Django Rest Framework boilerplate
+# Rate The Taste
 
 ## API Docs
 
