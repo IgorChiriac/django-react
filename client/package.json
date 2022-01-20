@@ -6,6 +6,7 @@
     "@date-io/dayjs": "^2.11.0",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@mui/icons-material": "^5.2.0",
     "@mui/lab": "^5.0.0-alpha.57",
     "@mui/material": "^5.2.0",
@@ -55,5 +56,8 @@
     "node": "14.6.0",
     "npm": "6.14.9"
   },
-  "proxy": "http://localhost:8001"
+  "proxy": "http://localhost:8001",
+  "devDependencies": {
+    "http-proxy-middleware": "^2.0.1"
+  }
 }

@@ -37,6 +37,8 @@ INSTALLED_APPS = (
     'health_check.db',  # stock Django health checkers
     'health_check.storage',
     'health_check.contrib.migrations',
+    'channels',
+    'django_eventstream',
     # Your apps
     'src.users',
     'src.files',
@@ -63,6 +65,7 @@ ALLOWED_HOSTS = [
 ]
 ROOT_URLCONF = 'src.urls'
 WSGI_APPLICATION = 'src.wsgi.application'
+ASGI_APPLICATION = 'src.asgi.application'
 
 # Email
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
@@ -77,6 +80,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
+
+EVENTSTREAM_ALLOW_ORIGIN = 'http://localhost:3000'
+EVENTSTREAM_ALLOW_CREDENTIALS = True
+EVENTSTREAM_ALLOW_HEADERS = 'Authorization'
 
 # Postgres
 DATABASES = {

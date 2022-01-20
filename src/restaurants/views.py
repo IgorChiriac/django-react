@@ -3,6 +3,7 @@ from .serializers import RestaurantSerializer, ReviewSerializer, RestaurantWithR
 from rest_framework import generics, filters, permissions
 from django.db.models import Avg, Count
 from src.restaurants.permissions import AdminOnly
+from django_eventstream import send_event
 
 
 class RestaurantList(generics.ListCreateAPIView):
@@ -12,6 +13,7 @@ class RestaurantList(generics.ListCreateAPIView):
     permission_classes = [AdminOnly]
 
     def get_queryset(self):
+        send_event('test', 'message', {'text': 'hello world'})
         return Restaurant.objects.annotate(
             reviews_count=Count('reviews'),
             reviews_avg=Avg('reviews__num_stars')
