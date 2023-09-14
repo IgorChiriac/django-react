@@ -58,9 +58,7 @@ const NewReview = (props: Props) => {
           <CircularProgress />
         </Box>
       )}
-      {formState.error && (
-        <Alert severity="error">An error occurred saving the review.</Alert>
-      )}
+      {formState.error && <Alert severity="error">An error occurred saving the review.</Alert>}
       <Typography gutterBottom variant="h6" component="div">
         Leave your review
       </Typography>
@@ -72,20 +70,14 @@ const NewReview = (props: Props) => {
           formik.setFieldValue("num_stars", num_stars);
         }}
       />
-      <Box
-        component="div"
-        sx={{ mt: 4, display: "flex", justifyContent: "flex-start" }}
-      >
+      <Box component="div" sx={{ mt: 4, display: "flex", justifyContent: "flex-start" }}>
         <MobileDatePicker
           label="Date of Visit"
           inputFormat="YYYY-MM-DD"
           value={formik.values.visit_date}
           disableFuture={true}
           onChange={(newValue: Date | null) => {
-            formik.setFieldValue(
-              "visit_date",
-              dayjs(newValue).format("YYYY-MM-DD")
-            );
+            formik.setFieldValue("visit_date", dayjs(newValue).format("YYYY-MM-DD"));
           }}
           renderInput={(params) => <TextField {...params} />}
         />
