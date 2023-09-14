@@ -16,7 +16,7 @@ const NewReview = (props: Props) => {
   const [formState, setFormState] = useState({ isLoading: false, error: null });
   const formik = useFormik({
     initialValues: {
-      comment: "",
+      comment: "hey",
       num_stars: 0,
       visit_date: dayjs().format("YYYY-MM-DD"),
     },
